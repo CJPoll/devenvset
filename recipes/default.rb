@@ -6,14 +6,7 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-file_owner = node['devenvset']['owner']
-file_group = node['devenvset']['group']
-
-file ".bashrc", file_owner, file_group
-file ".vimrc", file_owner, file_group
-file ".tmux.conf", file_owner, file_group
-
-def file filename, file_owner, firle_group
+def file filename, file_owner, file_group
 	cookbook_file "~/#{filename}" do
 		source filename
 		mode 0755
@@ -21,3 +14,10 @@ def file filename, file_owner, firle_group
 		group file_group
 	end
 end
+
+file_owner = node['devenvset']['owner']
+file_group = node['devenvset']['group']
+
+file ".bashrc", file_owner, file_group
+file ".vimrc", file_owner, file_group
+file ".tmux.conf", file_owner, file_group
