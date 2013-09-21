@@ -7,7 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 def move_file filename, file_owner, file_group
-	cookbook_file "~/#{filename}" do
+	cookbook_file "/home/#{file_owner}/#{filename}}" do
 		source filename
 		mode 0755
 		owner file_owner
