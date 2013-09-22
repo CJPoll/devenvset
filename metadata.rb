@@ -1,7 +1,9 @@
 name             'devenvset'
-maintainer       'YOUR_COMPANY_NAME'
-maintainer_email 'YOUR_EMAIL'
+maintainer       'Cody Poll'
+maintainer_email 'cjpoll@gmail.com>'
 license          'All rights reserved'
 description      'Installs/Configures devenvset'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.1.6'
+version          '0.1.7'
+
+depends "vim_chef"

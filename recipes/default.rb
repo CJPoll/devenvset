@@ -6,6 +6,8 @@
 #
 # All rights reserved - Do Not Redistribute
 #
+include_recipe "vim_chef::source"
+
 def move_file filename, file_owner, file_group
 	cookbook_file "/home/#{file_owner}/#{filename}" do
 		source filename
