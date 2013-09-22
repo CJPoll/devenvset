@@ -67,14 +67,14 @@ bash "install_tmux_powerline" do
 	EOH
 end
 
-bash "bundle_install" do
-	user "#{file_owner}"
-	cwd "/home/#{file_owner}"
-
-	code <<-EOH
-	vim +BundleInstall +qa
-	EOH
-end
+#bash "bundle_install" do
+#	user "#{file_owner}"
+#	cwd "/home/#{file_owner}"
+#
+#	code <<-EOH
+#	vim +BundleInstall +qa
+#	EOH
+#end
 
 bash "configure_git" do
 	user "#{file_owner}"
