@@ -61,7 +61,7 @@ bash "install_tmux_powerline" do
 	cwd "/home/#{file_owner}"
 	
 	code <<-EOH
-	if [ ! -d /home/#{file_owner}/.tmux_powerline ]
+	if [ ! -d /home/#{file_owner}/.tmux_powerline ]; then
 	git clone git://github.com/erikw/tmux-powerline.git /home/#{file_owner}/.tmux_powerline
 	fi
 	EOH
