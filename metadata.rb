@@ -8,4 +8,4 @@ version          '0.1.15'
 
 depends "build-essential"
 depends "cmake"
-depends "vim_chef"
+depends "vim_chef", git: "https://github.com/CJPoll/vim_chef.git"

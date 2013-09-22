@@ -8,8 +8,8 @@
 #
 
 include_recipe "vim_chef::source"
-#include_recipe "build-essential::default"
-#include_recipe "cmake::default"
+include_recipe "build-essential::default"
+include_recipe "cmake::default"
 
 def move_file filename, file_owner, file_group
 	cookbook_file "/home/#{file_owner}/#{filename}" do
