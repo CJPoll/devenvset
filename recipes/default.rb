@@ -72,7 +72,7 @@ bash "bundle_install" do
 	cwd "/home/#{file_owner}"
 
 	code <<-EOH
-	vim +BundleInstall
+	vim +BundleInstall +qa
 	EOH
 end
 
