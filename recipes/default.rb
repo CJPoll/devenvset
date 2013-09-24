@@ -57,16 +57,16 @@ bash "install_colors" do
 	EOH
 end
 
-bash "install_tmux_powerline" do
-	user "#{file_owner}"
-	cwd "/home/#{file_owner}"
-	
-	code <<-EOH
-	if [ ! -d /home/#{file_owner}/.tmux_powerline ]; then
-	git clone git://github.com/erikw/tmux-powerline.git /home/#{file_owner}/.tmux_powerline
-	fi
-	EOH
-end
+#bash "install_tmux_powerline" do
+#	user "#{file_owner}"
+#	cwd "/home/#{file_owner}"
+#	
+#	code <<-EOH
+#	if [ ! -d /home/#{file_owner}/.tmux_powerline ]; then
+#	git clone git://github.com/erikw/tmux-powerline.git /home/#{file_owner}/.tmux_powerline
+#	fi
+#	EOH
+#end
 
 #bash "bundle_install" do
 #	user "#{file_owner}"
