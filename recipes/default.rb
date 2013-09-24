@@ -77,8 +77,7 @@ end
 #end
 
 bash "configure_git" do
-	user "#{file_owner}"
-	cwd "/home/#{file_owner}"
+	user "root"
 
 	code <<-EOH
 	git config --system user.name "#{git_name}"
