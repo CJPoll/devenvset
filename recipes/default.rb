@@ -48,7 +48,8 @@ bash "install_colors" do
 	git clone https://github.com/chriskempson/tomorrow-theme /home/#{file_owner}/.vim/tomorrow-theme
 
 	mv /home/#{file_owner}/.vim/tomorrow-theme/vim/colors /home/#{file_owner}/.vim
-	sudo cp /home/#{file_owner}/.vim/colors/* /usr/share/vim/vimcurrent/colors
+	# Should probably make this portable to all versions of vim...
+	sudo cp /home/#{file_owner}/.vim/colors/* /usr/share/vim/vim73/colors
 
 	rm -rf /home/#{file_owner}/.vim/tomorrow-theme
 	rm -rf /home/#{file_owner}/.vim/colors
