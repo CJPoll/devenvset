@@ -81,10 +81,10 @@ bash "configure_git" do
 	cwd "/home/#{file_owner}"
 
 	code <<-EOH
-	git config --global user.name "#{git_name}"
-	git config --global user.email "#{git_email}"
-	git config --global credential.helper "cache --timeout=#{git_cache_creds}"
-	git config --global grep.linenumber 'true'
-	git config --global grep.extendedRegExp 'true'
+	git config --system user.name "#{git_name}"
+	git config --system user.email "#{git_email}"
+	git config --system credential.helper "cache --timeout=#{git_cache_creds}"
+	git config --system grep.linenumber 'true'
+	git config --system grep.extendedRegExp 'true'
 	EOH
 end

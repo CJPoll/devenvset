@@ -4,4 +4,4 @@ maintainer_email 'cjpoll@gmail.com>'
 license          'All rights reserved'
 description      'Installs/Configures devenvset'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.1.16'
+version          '0.1.17'
