@@ -68,7 +68,7 @@ case $OSTYPE in
 	darwin*) alias ls='ls -ahlFG';; 
 solaris*) alias ls='ls -ahlF'
 	alias gem='gem19';;
-*) alias ls='ls -hlvF --color --group-directories-first';;
+*) alias ls='ls -ahlvF --color --group-directories-first';;
 esac
 
 # Get IP address of wireless connection
