@@ -20,7 +20,7 @@ Bundle 'sjl/gundo.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-haml'
 Bundle 'tpope/vim-surround'
-"Bundle 'Valloric/YouCompleteMe'
+Bundle 'Valloric/YouCompleteMe'
 Bundle 'vim-scripts/bash-support.vim'
 Bundle 'vim-scripts/L9'
 Bundle 'vim-scripts/FuzzyFinder'
@@ -42,8 +42,8 @@ set laststatus=2   		" Always show the statusline
 set encoding=utf-8 		" Necessary to show Unicode glyphs
 set t_Co=256 			" Explicitly tell Vim that the terminal supports 256 colors
 
-colorscheme Tomorrow-Night
-set background=dark 	" Sets the background color (dark|light)
+colorscheme solarized
+set background=light 	" Sets the background color (dark|light)
 set backspace=indent,eol,start	" Backspace works correctly
 set cursorline			" Highlights the current line
 set fileformat=unix		" Sets the file format
