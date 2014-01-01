@@ -86,6 +86,7 @@ alias bashrc="$EDITOR ~/.bashrc"
 alias ex='exit'
 alias les='ls | less'
 alias g='grep'
+alias jvim='vim ./src/* ./test/* ./Makefile'
 alias mkdir='mkdir -p'
 alias more='less'
 alias ps='ps aux | g'
