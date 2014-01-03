@@ -21,6 +21,8 @@ Bundle 'Valloric/YouCompleteMe'
 Bundle 'vim-scripts/bash-support.vim'
 Bundle 'vim-scripts/L9'
 Bundle 'vim-scripts/FuzzyFinder'
+
+"Bundle 'hectord/vim-web2py'
 " }}}
 
 filetype plugin indent on
@@ -195,6 +197,12 @@ augroup erlang
 	autocmd FileType erlang nnoremap <buffer> <localleader>] lbi_<ESC>
 	autocmd FileType erlang nnoremap <buffer> <localleader><localleader>] :.s/\(\<[A-Z]\)/_\1/g<CR>
 	autocmd FileType erlang nnoremap <buffer> <localleader><localleader>[ :.s/_\([A-Z]\)/\1/g<CR>
+augroup END
+
+augroup python
+	autocmd!
+	autocmd FileType python nnoremap <buffer> <localleader>w :so /home/vagrant/.vim/bundle/vim-web2py/web2py.vim<CR>
+	autocmd FileType python nnoremap <buffer> <localleader>p :PROJECT<CR>
 augroup END
 
 augroup haml
