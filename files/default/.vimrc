@@ -8,9 +8,7 @@ Bundle 'gmarik/vundle'
 " Vundle Packages {{{
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'christoomey/vim-tmux-navigator'
-Bundle 'hcs42/vim-erlang-tags'
 Bundle 'jiangmiao/auto-pairs'
-Bundle 'kchmck/vim-coffee-script'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'majutsushi/tagbar'
 Bundle 'mileszs/ack.vim'
@@ -18,7 +16,6 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'sjl/gundo.vim'
 Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-haml'
 Bundle 'tpope/vim-surround'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'vim-scripts/bash-support.vim'
@@ -43,8 +40,6 @@ set encoding=utf-8 		" Necessary to show Unicode glyphs
 set t_Co=256 			" Explicitly tell Vim that the terminal supports 256 colors
 
 colorscheme Tomorrow-Night
-set autochdir			" Automatically changes local working directory to that
-						" of the file being worked on.
 set background=dark 	" Sets the background color (dark|light)
 set backspace=indent,eol,start	" Backspace works correctly
 set cursorline			" Highlights the current line
