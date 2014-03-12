@@ -50,7 +50,6 @@ bash "install_colors" do
 	sudo cp /home/#{file_owner}/.vim/colors/* /usr/share/vim/vim73/colors
 
 	rm -rf /home/#{file_owner}/.vim/tomorrow-theme
-	rm -rf /home/#{file_owner}/.vim/colors
 	fi
 	EOH
 end
