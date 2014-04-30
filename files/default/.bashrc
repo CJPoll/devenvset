@@ -131,4 +131,4 @@ alias stash='git stash'
 alias status='git status'
 alias up='git up'
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+#PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

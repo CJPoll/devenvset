@@ -1,28 +1,32 @@
 " Vundle Setup {{{
-set nocompatible
-filetype off
-set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
-Bundle 'gmarik/vundle'
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/vundle'
 
 " Vundle Packages {{{
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'christoomey/vim-tmux-navigator'
-Bundle 'jiangmiao/auto-pairs'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'majutsushi/tagbar'
-Bundle 'mileszs/ack.vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
-Bundle 'sjl/gundo.vim'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-surround'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'vim-scripts/bash-support.vim'
-Bundle 'vim-scripts/L9'
-Bundle 'vim-scripts/FuzzyFinder'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'majutsushi/tagbar'
+Plugin 'mileszs/ack.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'sjl/gundo.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+"Plugin 'Valloric/YouCompleteMe'
+Plugin 'vim-scripts/bash-support.vim'
+Plugin 'vim-scripts/L9'
+Plugin 'vim-scripts/FuzzyFinder'
 
-"Bundle 'hectord/vim-web2py'
+call vundle#end()            " required
+filetype plugin indent on    " required
+
 " }}}
 
 filetype plugin indent on
@@ -41,7 +45,7 @@ set laststatus=2   		" Always show the statusline
 set encoding=utf-8 		" Necessary to show Unicode glyphs
 set t_Co=256 			" Explicitly tell Vim that the terminal supports 256 colors
 
-colorscheme Tomorrow-Night
+colorscheme Tomorrow-Night-Eighties
 set background=dark 	" Sets the background color (dark|light)
 set backspace=indent,eol,start	" Backspace works correctly
 set cursorline			" Highlights the current line
