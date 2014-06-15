@@ -9,6 +9,7 @@ Plugin 'gmarik/vundle'
 
 " Vundle Packages {{{
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'ChrisKempson/Tomorrow-Theme', {'rtp': 'vim/'}
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'Lokaltog/vim-powerline'
