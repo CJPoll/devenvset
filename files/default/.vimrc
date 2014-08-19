@@ -46,13 +46,13 @@ set laststatus=2   		" Always show the statusline
 set encoding=utf-8 		" Necessary to show Unicode glyphs
 set t_Co=256 			" Explicitly tell Vim that the terminal supports 256 colors
 
-colorscheme Tomorrow-Night-Eighties
+colorscheme Tomorrow-Night
 set background=dark 	" Sets the background color (dark|light)
 set backspace=indent,eol,start	" Backspace works correctly
 set cursorline			" Highlights the current line
 set fileformat=unix		" Sets the file format
 set foldenable			" Enables code folding
-"set hlsearch			" Highlight search results
+set hlsearch			" Highlight search results
 " Really fetching annoying. Doesn't turn off the
 " highlight when done searching
 set ignorecase			" Ignore case when searching
@@ -103,6 +103,9 @@ nnoremap <leader>i gg=G
 " Easy vimrc edit
 nnoremap <leader>vv :vsplit $MYVIMRC<CR>
 nnoremap <leader>vd :source $MYVIMRC<CR>
+
+" Refresh FuzzyFinder File Cache
+nnoremap <leader>cf :FufRenewCache<CR>
 
 " Easy insert-mode escape
 inoremap jk <ESC>
@@ -206,7 +209,6 @@ augroup END
 
 augroup python
 	autocmd!
-	autocmd FileType python nnoremap <buffer> <localleader>w :so /home/vagrant/.vim/bundle/vim-web2py/web2py.vim<CR>
 	autocmd FileType python nnoremap <buffer> <localleader>p :PROJECT<CR>
 augroup END
 
@@ -221,6 +223,7 @@ augroup haml
 	autocmd FileType haml nnoremap <buffer> <leader>m ]m
 	autocmd FileType haml nnoremap <buffer> <leader><leader>m [m
 	autocmd FileType haml nnoremap <buffer> <leader><leader>M [M
+	au! FileType haml set noet sts=0 sw=4 ts=4
 augroup end
 
 augroup ruby 
@@ -234,6 +237,19 @@ augroup ruby
 	autocmd FileType ruby nnoremap <buffer> <leader>m ]m
 	autocmd FileType ruby nnoremap <buffer> <leader><leader>m [m
 	autocmd FileType ruby nnoremap <buffer> <leader><leader>M [M
+augroup END 
+
+augroup eruby 
+	autocmd!
+	autocmd FileType eruby nnoremap <buffer> <localleader>rs :Rserv<CR>
+	autocmd FileType eruby nnoremap <buffer> <localleader>r :!rake<CR>
+	autocmd FileType eruby nnoremap <buffer> <localleader>m :Emodel 
+	autocmd FileType eruby nnoremap <buffer> <localleader>c :Econtroller  
+	autocmd FileType eruby nnoremap <buffer> <localleader>v :Eview 
+	autocmd FileType eruby nnoremap <buffer> <localleader>M ]M
+	autocmd FileType eruby nnoremap <buffer> <leader>m ]m
+	autocmd FileType eruby nnoremap <buffer> <leader><leader>m [m
+	autocmd FileType eruby nnoremap <buffer> <leader><leader>M [M
 augroup END 
 
 augroup java

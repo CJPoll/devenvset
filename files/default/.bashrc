@@ -83,13 +83,15 @@ alias 'ipe'='ipconfig getifaddr en0'
 #alias ack='ack-grep'
 alias apt-get='sudo apt-get'
 alias bashrc="$EDITOR ~/.bashrc"
+alias cppvim='vim src/*'
+alias ctags='/usr/local/bin/ctags'
 alias ex='exit'
 alias les='ls | less'
 alias g='grep'
 alias jvim='vim ./src/* ./test/* ./Makefile'
 alias mkdir='mkdir -p'
 alias more='less'
-alias ps='ps aux | g'
+#alias ps='ps aux | g'
 alias search='apt-cache search'
 alias tmux='tmux -2'
 alias tmuxrc='vim ~/.tmux.conf'
@@ -98,6 +100,7 @@ alias rvim='vim *.rb spec/*.rb'
 alias vbox='vboxmanage'
 alias vi='vim'
 alias vim='vim'
+alias vim?='ps vim'
 alias vimerl='vim apps/*/src/*.?rl apps/*/test/*.?rl apps/*/include/*.?rl apps/*/test/*/*.?rl Makefile rebar.config'
 alias vimrc="$EDITOR ~/.vimrc"
 alias vm='vim'
@@ -131,4 +134,7 @@ alias stash='git stash'
 alias status='git status'
 alias up='git up'
 
-#PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
