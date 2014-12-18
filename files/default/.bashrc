@@ -91,7 +91,7 @@ alias g='grep'
 alias jvim='vim ./src/* ./test/* ./Makefile'
 alias mkdir='mkdir -p'
 alias more='less'
-#alias ps='ps aux | g'
+#alias ps='ps aux | g' # Causes problems with rvm
 alias search='apt-cache search'
 alias tmux='tmux -2'
 alias tmuxrc='vim ~/.tmux.conf'
@@ -138,3 +138,9 @@ alias up='git up'
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+export NVM_DIR="/Users/work/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

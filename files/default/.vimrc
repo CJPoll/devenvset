@@ -11,16 +11,22 @@ Plugin 'gmarik/vundle'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'ChrisKempson/Tomorrow-Theme', {'rtp': 'vim/'}
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'Lokaltog/vim-powerline'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'MarcWeber/vim-addon-mw-utils' 				" Required for vim-snipmate
 Plugin 'majutsushi/tagbar'
+Plugin 'mklabs/grunt.vim'
 Plugin 'mileszs/ack.vim'
+Plugin 'PProvost/vim-ps1'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'sjl/gundo.vim'
+Plugin 'tomtom/tlib_vim'							" Required for vim-snipmate
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
-"Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-scripts/bash-support.vim'
 Plugin 'vim-scripts/L9'
 Plugin 'vim-scripts/FuzzyFinder'
@@ -32,6 +38,19 @@ filetype plugin indent on    " required
 
 filetype plugin indent on
 
+" }}}
+
+" Powerline Setup {{{
+set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
+
+" Always show statusline
+set laststatus=2
+
+" Use 256 colours (Use this setting only if your terminal supports 256 colours)
+set t_Co=256"
 " }}}
 
 " Global variables {{{
@@ -53,8 +72,6 @@ set cursorline			" Highlights the current line
 set fileformat=unix		" Sets the file format
 set foldenable			" Enables code folding
 set hlsearch			" Highlight search results
-" Really fetching annoying. Doesn't turn off the
-" highlight when done searching
 set ignorecase			" Ignore case when searching
 set incsearch			" Search while typing
 set nobackup			" Don't make backup files
@@ -62,7 +79,7 @@ set noswapfile			" Don't make annoying swap files
 set number				" Line numbers
 set ruler				" Show which column the cursor is on
 set scrolloff=8			" Start scrolling when cursor is x lines from edge
-set shell=bash			" What shell to start on :shell command
+set shell=zsh			" What shell to start on :shell command
 "set shellcmdflag=-ic	" Load .bash_profile when running shell commands
 " (Allows aliases), but vim tends to drop to the back
 set showcmd				" Shows info about the current command at the bottom
@@ -72,9 +89,19 @@ set wildmenu			" Autocomplete done right
 set wildmode=full		" Autocomplete done right
 syntax on				" Syntax highlighting
 
+" Powershell ctags
+let g:tagbar_type_ps1 = {
+    \ 'ctagstype' : 'powershell',
+	\ 'kinds'     : [
+        \ 'f:function',
+        \ 'i:filter',
+        \ 'a:alias'
+    \ ]
+\ }
+
 " Change background color past 80 columns
-"execute "set colorcolumn=" . join(range(81,335), ',')
-set colorcolumn=80
+execute "set colorcolumn=" . join(range(81,335), ',')
+"set colorcolumn=80
 
 " Tab settings
 
@@ -97,6 +124,14 @@ let localleader = "\\"
 " Pinky saver
 nnoremap ; :
 
+" Git Mappings {{{
+nnoremap <leader>ga :Git add 
+nnoremap <leader>gs :Git status<CR>
+nnoremap <leader>gc :Git commit -v<CR>
+nnoremap <leader>gca :Git commit -v --amend<CR>
+nnoremap <leader>gp :Git push<CR>
+" }}}
+
 " Easy alignment
 nnoremap <leader>i gg=G 			
 
@@ -109,7 +144,7 @@ nnoremap <leader>cf :FufRenewCache<CR>
 
 " Easy insert-mode escape
 inoremap jk <ESC>
-inoremap <ESC> <nop>
+"inoremap <ESC> <nop>
 
 " Easy Save
 nnoremap <leader>s :w<CR>
@@ -224,54 +259,54 @@ augroup haml
 	autocmd FileType haml nnoremap <buffer> <leader><leader>m [m
 	autocmd FileType haml nnoremap <buffer> <leader><leader>M [M
 	au! FileType haml set noet sts=0 sw=4 ts=4
-augroup end
+	augroup end
 
-augroup ruby 
-	autocmd!
-	autocmd FileType ruby nnoremap <buffer> <localleader>rs :Rserv<CR>
-	autocmd FileType ruby nnoremap <buffer> <localleader>r :!rake<CR>
-	autocmd FileType ruby nnoremap <buffer> <localleader>m :Emodel 
-	autocmd FileType ruby nnoremap <buffer> <localleader>c :Econtroller  
-	autocmd FileType ruby nnoremap <buffer> <localleader>v :Eview 
-	autocmd FileType ruby nnoremap <buffer> <localleader>M ]M
-	autocmd FileType ruby nnoremap <buffer> <leader>m ]m
-	autocmd FileType ruby nnoremap <buffer> <leader><leader>m [m
-	autocmd FileType ruby nnoremap <buffer> <leader><leader>M [M
-augroup END 
+		augroup ruby 
+			autocmd!
+			autocmd FileType ruby nnoremap <buffer> <localleader>rs :Rserv<CR>
+			autocmd FileType ruby nnoremap <buffer> <localleader>r :!rake<CR>
+			autocmd FileType ruby nnoremap <buffer> <localleader>m :Emodel 
+			autocmd FileType ruby nnoremap <buffer> <localleader>c :Econtroller  
+			autocmd FileType ruby nnoremap <buffer> <localleader>v :Eview 
+			autocmd FileType ruby nnoremap <buffer> <localleader>M ]M
+			autocmd FileType ruby nnoremap <buffer> <leader>m ]m
+			autocmd FileType ruby nnoremap <buffer> <leader><leader>m [m
+			autocmd FileType ruby nnoremap <buffer> <leader><leader>M [M
+		augroup END 
 
-augroup eruby 
-	autocmd!
-	autocmd FileType eruby nnoremap <buffer> <localleader>rs :Rserv<CR>
-	autocmd FileType eruby nnoremap <buffer> <localleader>r :!rake<CR>
-	autocmd FileType eruby nnoremap <buffer> <localleader>m :Emodel 
-	autocmd FileType eruby nnoremap <buffer> <localleader>c :Econtroller  
-	autocmd FileType eruby nnoremap <buffer> <localleader>v :Eview 
-	autocmd FileType eruby nnoremap <buffer> <localleader>M ]M
-	autocmd FileType eruby nnoremap <buffer> <leader>m ]m
-	autocmd FileType eruby nnoremap <buffer> <leader><leader>m [m
-	autocmd FileType eruby nnoremap <buffer> <leader><leader>M [M
-augroup END 
+		augroup eruby 
+			autocmd!
+			autocmd FileType eruby nnoremap <buffer> <localleader>rs :Rserv<CR>
+			autocmd FileType eruby nnoremap <buffer> <localleader>r :!rake<CR>
+			autocmd FileType eruby nnoremap <buffer> <localleader>m :Emodel 
+			autocmd FileType eruby nnoremap <buffer> <localleader>c :Econtroller  
+			autocmd FileType eruby nnoremap <buffer> <localleader>v :Eview 
+			autocmd FileType eruby nnoremap <buffer> <localleader>M ]M
+			autocmd FileType eruby nnoremap <buffer> <leader>m ]m
+			autocmd FileType eruby nnoremap <buffer> <leader><leader>m [m
+			autocmd FileType eruby nnoremap <buffer> <leader><leader>M [M
+		augroup END 
 
-augroup java
-	autocmd!
-	autocmd FileType java nnoremap <buffer> <localleader>r :!make test<CR>
-augroup END
+		augroup java
+			autocmd!
+			autocmd FileType java nnoremap <buffer> <localleader>r :!make test<CR>
+		augroup END
 
-augroup reload_vimrc 
-	autocmd!
-	autocmd BufWritePost $MYVIMRC source $MYVIMRC
-augroup END
+		augroup reload_vimrc 
+			autocmd!
+			autocmd BufWritePost $MYVIMRC source $MYVIMRC
+		augroup END
 
-augroup hard
-	autocmd!
-" Hard mode: No arrow keys or hjkl
-" nnoremap h			<nop>
-" nnoremap j			<nop>
-" nnoremap k			<nop>
-" nnoremap l			<nop>
-" nnoremap <Right>	<nop>
-" nnoremap <Left>		<nop>
-" nnoremap <Up>		<nop>
-" nnoremap <Down>		<nop>
-augroup END
-" }}}
+		augroup hard
+			autocmd!
+			" Hard mode: No arrow keys or hjkl
+			" nnoremap h			<nop>
+			" nnoremap j			<nop>
+			" nnoremap k			<nop>
+			" nnoremap l			<nop>
+			" nnoremap <Right>	<nop>
+			" nnoremap <Left>		<nop>
+			" nnoremap <Up>		<nop>
+			" nnoremap <Down>		<nop>
+		augroup END
+		" }}}
