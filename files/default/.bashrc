@@ -33,6 +33,178 @@ export EDITOR='vim'	# vim is the default editor
 #     exec tmux
 # fi
 
+listvms ()
+{
+	if [ -z "$1"  ]
+	then
+		VBoxManage list vms
+	else
+		VBoxManage list runningvms
+	fi
+
+}	# ----------  end of function listvms  ----------
+
+vundle ()
+{
+	vim +BundleInstall +qa
+
+}	# ----------  end of function bundle  ----------
+
+vmlist ()
+{
+	RUN=$1
+	if [ -z "$RUN"  ]
+	then
+		VBoxManage list vms
+	else
+		echo "Running VMs: "
+		VBoxManage list runningvms
+	fi
+
+
+}	# ----------  end of function vmlist  ----------
+
+vmssh ()
+{
+	USER=$1
+	if [ -z "$USER"  ]; then
+		USER="cjpoll"
+	fi
+	ssh -p 2222 "$USER"@127.0.0.1
+
+}	# ----------  end of function vmssh  ----------
+
+
+vmscreen ()
+{
+	ETH=$(ipconfig getifaddr en0)
+	if [ -z "$ETH"  ]
+	then
+		WIFI=$(ipconfig getifaddr en1)
+		if [ -z "$WIFI"  ]
+		then
+			echo "No network connection detected"
+			return 1
+		else
+			echo "Wireless connection detected"
+			IP=$(ipw)
+		fi
+	else
+		echo "Ethernet connection detected"
+		IP=$(ipe)
+	fi
+
+	echo "Setting video resolution"
+	VBoxManage controlvm $MACHINE setvideomodehint 1200 800 16
+	echo "Video mode set to 1200x800"
+	xfreerdp "$IP"
+
+
+}	# ----------  end of function vmscreen  ----------
+
+vmnet ()
+{
+	MACHINE="$1"
+	
+	VBoxManage modifyvm $MACHINE --natpf1 "guestssh,tcp,127.0.0.1,2222,,22"
+
+	ETH=$(ipconfig getifaddr en0)
+	if [ -z "$ETH"  ]
+	then
+		WIFI=$(ipconfig getifaddr en1)
+		if [ -z "$WIFI"  ]
+		then
+			echo "No network connection detected"
+			return 1
+		else
+			echo "Wireless connection detected"
+			IP=$(ipw)
+		fi
+	else
+		echo "Ethernet connection detected"
+		IP=$(ipe)
+	fi
+
+	vmvrde $MACHINE $IP
+
+}	# ----------  end of function vmnet  ----------
+
+startvm ()
+{
+	if [ -z "$1"  ]	
+	then
+		echo "Function needs a parameter"
+		return 1
+	fi
+
+	MACHINE=$1
+	vmnet $MACHINE
+
+	if [ -z "$2"  ]
+	then
+		VBoxManage startvm "$MACHINE" --type headless
+	else
+		if [ "$2" = "head"  ]
+		then
+			VBoxManage startvm "$MACHINE" --type headless
+			if [ -z "$3"  ]
+			then
+				rdesktop $(ipw)
+			else
+				rdesktop $(ipe)
+			fi
+		fi
+	fi
+
+}	# ----------  end of function startvm  ----------
+
+
+stopvm ()
+{
+	if [ -z "$1"  ]
+	then
+		echo "Function needs a parameter"
+		return 1
+	else
+		VBoxManage controlvm "$1" poweroff
+	fi
+
+}	# ----------  end of function stopvm  ----------
+
+
+savevm ()
+{
+	if [ -z "$1"  ]
+	then
+		echo "Function needs a parameter"
+		return 1
+	else
+		VBoxManage controlvm "$1" savestate
+	fi
+
+}	# ----------  end of function savevm  ----------
+
+
+vmvrde ()
+{
+	if [ -z "$1"  ]
+	then
+		echo "Need a VM name to work on"
+		return 1
+	fi
+
+	if [ -z "$2"  ]
+	then
+		echo "Need an ip address"
+		return 1
+	fi
+
+	VBoxManage modifyvm "$1" --vrde on --vrdeaddress "$2"
+	return 0
+
+
+}	# ----------  end of function vmvrde  ----------
+
 updatedots ()
 {
 	cp ~/.bashrc ~/devenvset/files/default/
@@ -68,7 +240,7 @@ case $OSTYPE in
 	darwin*) alias ls='ls -ahlFG';; 
 solaris*) alias ls='ls -ahlF'
 	alias gem='gem19';;
-*) alias ls='ls -ahlvF --color --group-directories-first';;
+*) alias ls='ls -hlvF --color --group-directories-first';;
 esac
 
 # Get IP address of wireless connection
@@ -91,7 +263,7 @@ alias g='grep'
 alias jvim='vim ./src/* ./test/* ./Makefile'
 alias mkdir='mkdir -p'
 alias more='less'
-#alias ps='ps aux | g' # Causes problems with rvm
+#alias ps='ps aux | g'
 alias search='apt-cache search'
 alias tmux='tmux -2'
 alias tmuxrc='vim ~/.tmux.conf'
@@ -134,13 +306,13 @@ alias stash='git stash'
 alias status='git status'
 alias up='git up'
 
+#PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+export PATH=$PATH:/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/
+export PATH=$PATH:/usr/local/bin
+
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+#rvm gemset use sra
 
 ### Added by the Heroku Toolbelt
+export PATH="/opt/chefdk/bin:$PATH"
 export PATH="/usr/local/heroku/bin:$PATH"
-export PATH="/usr/local/bin:$PATH"
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
-export NVM_DIR="/Users/work/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

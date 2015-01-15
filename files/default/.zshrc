@@ -68,12 +68,13 @@ ZSH_THEME="agnoster"
 plugins=(brew git rails tmux wd web-search)
 
 # Plugin Configuration
+export TERM="screen-256color"
 ZSH_TMUX_AUTOSTART=true
 ZSH_TMUX_AUTOQUIT=false
 
 # User configuration
 
-export PATH="/usr/local/heroku/bin:/usr/local/bin:/Users/work/.rvm/gems/ruby-2.1.5/bin:/Users/work/.rvm/gems/ruby-2.1.5@global/bin:/Users/work/.rvm/rubies/ruby-2.1.5/bin:/usr/bin:/bin:/usr/sbin:/sbin::/opt/X11/bin:/usr/local/git/bin:/usr/local/heroku/bin:/Users/work/.rvm/gems/ruby-2.1.5/bin:/Users/work/.rvm/gems/ruby-2.1.5@global/bin:/Users/work/.rvm/rubies/ruby-2.1.5/bin:/Users/work/.rvm/bin:/Users/work/.rvm/bin"
+export PATH="/usr/local/heroku/bin:/usr/local/bin:/usr/local/sbin:/Users/$(whoami)/.rvm/gems/ruby-2.1.5/bin:/Users/$(whoami)/.rvm/gems/ruby-2.1.5@global/bin:/Users/$(whoami)/.rvm/rubies/ruby-2.1.5/bin:/usr/bin:/bin:/usr/sbin:/sbin::/opt/X11/bin:/usr/local/git/bin:/usr/local/heroku/bin:/Users/$(whoami)/.rvm/gems/ruby-2.1.5/bin:/Users/$(whoami)/.rvm/gems/ruby-2.1.5@global/bin:/Users/$(whoami)/.rvm/rubies/ruby-2.1.5/bin:/Users/$(whoami)/.rvm/bin:/Users/$(whoami)/.rvm/bin"
 
 export NVM_DIR="/Users/work/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -117,34 +118,41 @@ DEVENVSET_DIR=~/developer/devenvset;
 
 function updatedots()
 {
-	copyDotFile ".tmux.conf";
-	copyDotFile ".vimrc";
-	copyDotFile ".bashrc";
-	copyDotFile ".zshrc";
-
-	pushDevenvset;
+	copyDotFile ".tmux.conf" 	&& \
+		copyDotFile ".vimrc" 	&& \
+		copyDotFile ".bashrc" 	&& \
+		copyDotFile ".zshrc" 	&& \
+		pushDevenvset;
 }
 
 function copyDotFile()
 {
 	DOT_FILE=$1;
-	
-	cp ~/$DOT_FILE $DEVENVSET_DIR/files/default;
+
+	cp ~/${DOT_FILE} ${DEVENVSET_DIR}/files/default;
 }
 
 function pushDevenvset()
 {
-	cd $DEVENVSET_DIR;
+	pushd .;
+	cd ${DEVENVSET_DIR};
 
 	git add .;
 	git commit -v;
 	git push origin master;
+ 	popd;
 }
 
-alias zshrc="$EDITOR ~/.zshrc"
+function untrackedFiles()
+{
+	git ls-files --others --exclude-standard;
+}
+
 alias resource='source ~/.zshrc'
+alias tmuxrc="$EDITOR ~/.tmux.conf"
 alias vimrc="$EDITOR ~/.vimrc"
 alias x='exit'
+alias zshrc="$EDITOR ~/.zshrc"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 set -o vi  			# Use vi mode in the shell
