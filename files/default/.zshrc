@@ -1,4 +1,4 @@
-#!/bin/zsh  
+#!/usr/local/bin/zsh  
 #===============================================================================
 #
 #          FILE: zshrc
@@ -73,7 +73,7 @@ ZSH_TMUX_AUTOQUIT=false
 
 # User configuration
 
-export PATH="/usr/local/heroku/bin:/usr/local/bin:/usr/local/sbin:/Users/$(whoami)/.rvm/gems/ruby-2.1.5/bin:/Users/$(whoami)/.rvm/gems/ruby-2.1.5@global/bin:/Users/$(whoami)/.rvm/rubies/ruby-2.1.5/bin:/usr/bin:/bin:/usr/sbin:/sbin::/opt/X11/bin:/usr/local/git/bin:/usr/local/heroku/bin:/Users/$(whoami)/.rvm/gems/ruby-2.1.5/bin:/Users/$(whoami)/.rvm/gems/ruby-2.1.5@global/bin:/Users/$(whoami)/.rvm/rubies/ruby-2.1.5/bin:/Users/$(whoami)/.rvm/bin:/Users/$(whoami)/.rvm/bin"
+export PATH="/usr/local/bin:/usr/local/sbin:/Users/$(whoami)/.rvm/gems/ruby-2.1.5/bin:/Users/$(whoami)/.rvm/gems/ruby-2.1.5@global/bin:/Users/$(whoami)/.rvm/rubies/ruby-2.1.5/bin:/usr/bin:/bin:/usr/sbin:/sbin::/opt/X11/bin:/usr/local/git/bin:/Users/$(whoami)/.rvm/gems/ruby-2.1.5/bin:/Users/$(whoami)/.rvm/gems/ruby-2.1.5@global/bin:/Users/$(whoami)/.rvm/rubies/ruby-2.1.5/bin:/Users/$(whoami)/.rvm/bin:/Users/$(whoami)/.rvm/bin"
 
 export NVM_DIR="/Users/work/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -113,33 +113,48 @@ case $OSTYPE in
 	*) alias ls='ls -ahlvF --color --group-directories-first';;
 esac
 
-DEVENVSET_DIR=~/developer/devenvset;
+DEVENVSET_DIR="${HOME}/developer/devenvset";
 
 function updatedots()
 {
-	copyDotFile ".tmux.conf" 	&& \
-		copyDotFile ".vimrc" 	&& \
-		copyDotFile ".bashrc" 	&& \
-		copyDotFile ".zshrc" 	&& \
+	copyDotFile "${HOME}/.tmux.conf" 	&& \
+		copyDotFile "${HOME}/.vimrc" 	&& \
+		copyDotFile "${HOME}/.bashrc" 	&& \
+		copyDotFile "${HOME}/.zshrc" 	&& \
 		pushDevenvset;
 }
 
 function copyDotFile()
 {
-	DOT_FILE=$1;
+	DOT_FILE="$1";
+	COPY_DIR="${DEVENVSET_DIR}/files/default";
 
-	cp ~/${DOT_FILE} ${DEVENVSET_DIR}/files/default;
+	if [[ ! -d "${COPY_DIR}" ]]; then
+		echo "No such copy dir: ${COPY_DIR}";
+		return 1;
+	fi
+		echo "Currently in $(pwd)";
+		echo "Copying ${DOT_FILE} to ${COPY_DIR}";
+
+		cp "${DOT_FILE}" "${COPY_DIR}";
+		echo "Copied ${DOT_FILE} to ${COPY_DIR}";
 }
 
 function pushDevenvset()
 {
-	pushd .;
+	echo "Currently in $(pwd)";
+	echo "Pushing $(pwd)";
+	pushd "$(pwd)";
+	echo "Pushed $(pwd)";
 	cd ${DEVENVSET_DIR};
+	echo "Currently in $(pwd)";
 
 	git add .;
 	git commit -v;
 	git push origin master;
- 	popd;
+
+	popd;
+	echo "Currently in $(pwd)";
 }
 
 function untrackedFiles()
@@ -147,11 +162,11 @@ function untrackedFiles()
 	git ls-files --others --exclude-standard;
 }
 
-alias resource='source ~/.zshrc'
-alias tmuxrc="$EDITOR ~/.tmux.conf"
-alias vimrc="$EDITOR ~/.vimrc"
+alias resource="source ${HOME}/.zshrc"
+alias tmuxrc="$EDITOR ${HOME}/.tmux.conf"
+alias vimrc="$EDITOR ${HOME}/.vimrc"
 alias x='exit'
-alias zshrc="$EDITOR ~/.zshrc"
+alias zshrc="$EDITOR ${HOME}/.zshrc"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 set -o vi  			# Use vi mode in the shell
