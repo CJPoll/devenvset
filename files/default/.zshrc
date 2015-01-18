@@ -68,7 +68,6 @@ ZSH_THEME="agnoster"
 plugins=(brew git rails tmux wd web-search)
 
 # Plugin Configuration
-#export TERM="screen-256color"
 ZSH_TMUX_AUTOSTART=true
 ZSH_TMUX_AUTOQUIT=false
 

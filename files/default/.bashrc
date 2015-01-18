@@ -240,7 +240,7 @@ case $OSTYPE in
 	darwin*) alias ls='ls -ahlFG';; 
 solaris*) alias ls='ls -ahlF'
 	alias gem='gem19';;
-*) alias ls='ls -hlvF --color --group-directories-first';;
+*) alias ls='ls -hlvF --color --group-directories-first';
 esac
 
 # Get IP address of wireless connection
@@ -306,13 +306,4 @@ alias stash='git stash'
 alias status='git status'
 alias up='git up'
 
-#PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-export PATH=$PATH:/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/
-export PATH=$PATH:/usr/local/bin
-
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-#rvm gemset use sra
-
-### Added by the Heroku Toolbelt
-export PATH="/opt/chefdk/bin:$PATH"
-export PATH="/usr/local/heroku/bin:$PATH"
