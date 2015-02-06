@@ -27,6 +27,7 @@ Plugin 'tomtom/tlib_vim'							" Required for vim-snipmate
 Plugin 'tpope/vim-cucumber'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rails'
+Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-surround'
 "Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-scripts/bash-support.vim'
@@ -38,18 +39,19 @@ filetype plugin indent on    " required
 
 " }}}
 
+syntax on
 filetype plugin indent on
+set omnifunc=syntaxcomplete#Complete
 
 " }}}
 
 " Powerline Setup {{{
-set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim
 python from powerline.vim import setup as powerline_setup
 python powerline_setup()
 python del powerline_setup
 
 " Always show statusline
-set laststatus=2
+ set laststatus=2
 
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set t_Co=256"
@@ -66,14 +68,14 @@ let g:BASH_AuthorName='Cody Poll'
 let g:BASH_Email='CJPoll@gmail.com'
 " }}} 
 
-" Personal settings {{{
+"Personal settings {{{
 set laststatus=2   				" Always show the statusline                             
 set encoding=utf-8 				" Necessary to show Unicode glyphs
 set t_Co=256 					" Explicitly tell Vim that the terminal supports 256 colors
 
 colorscheme Tomorrow-Night
-set background=dark 			" Sets the background color (dark|light)
-set backspace=indent,eol,start	" Backspace works correctly
+set background=dark 				" Sets the background color (dark|light)
+set backspace=indent,eol,start		" Backspace works correctly
 set cursorline					" Highlights the current line
 set fileformat=unix				" Sets the file format
 set foldenable					" Enables code folding
@@ -94,16 +96,6 @@ set tw=80 						" Text Width = 80 characters
 set wildmenu					" Autocomplete done right
 set wildmode=full				" Autocomplete done right
 syntax on						" Syntax highlighting
-
-" Powershell ctags
-let g:tagbar_type_ps1 = {
-			\ 'ctagstype' : 'powershell',
-			\ 'kinds'     : [
-			\ 'f:function',
-			\ 'i:filter',
-			\ 'a:alias'
-			\ ]
-			\ }
 
 " Change background color past 80 columns
 execute "set colorcolumn=" . join(range(81,335), ',')
@@ -184,6 +176,12 @@ nnoremap <leader>hs :split<CR>
 
 " Easy window split (vertical)
 nnoremap <leader>vs :vsplit<CR>
+
+" Horizontal split to vsplit
+nnoremap <leader>x <C-w>t<C-w>H
+
+" Vertical split to Horizontal split
+nnoremap <leader>z <C-w>t<C-w>K
 
 " FuzzyFinder Shortcuts
 

@@ -65,7 +65,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(brew git rails tmux wd web-search)
+plugins=(git tmux wd)
 
 # Plugin Configuration
 ZSH_TMUX_AUTOSTART=true
@@ -73,15 +73,16 @@ ZSH_TMUX_AUTOQUIT=false
 
 # User configuration
 
-export PATH="/usr/local/bin:/usr/local/sbin:/Users/$(whoami)/.rvm/gems/ruby-2.1.5/bin:/Users/$(whoami)/.rvm/gems/ruby-2.1.5@global/bin:/Users/$(whoami)/.rvm/rubies/ruby-2.1.5/bin:/usr/bin:/bin:/usr/sbin:/sbin::/opt/X11/bin:/usr/local/git/bin:/Users/$(whoami)/.rvm/gems/ruby-2.1.5/bin:/Users/$(whoami)/.rvm/gems/ruby-2.1.5@global/bin:/Users/$(whoami)/.rvm/rubies/ruby-2.1.5/bin:/Users/$(whoami)/.rvm/bin:/Users/$(whoami)/.rvm/bin"
+export PATH="/usr/local/sbin:/Users/cjpoll/.rvm/gems/ruby-2.1.5/bin:/Users/cjpoll/.rvm/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/git/bin:/Users/cjpoll/.rvm/gems/ruby-2.1.5/bin:/Users/cjpoll/.rvm/gems/ruby-2.1.5@global/bin:/Users/cjpoll/.rvm/rubies/ruby-2.1.5/bin:/usr/local/heroku/bin"
 
-export NVM_DIR="/Users/work/.nvm"
+export NVM_DIR="/Users/cjpoll/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-source $(brew --prefix nvm)/nvm.sh
+#source $(brew --prefix nvm)/nvm.sh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
 
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
@@ -168,5 +169,5 @@ alias vimrc="$EDITOR ${HOME}/.vimrc"
 alias x='exit'
 alias zshrc="$EDITOR ${HOME}/.zshrc"
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 set -o vi  			# Use vi mode in the shell
+

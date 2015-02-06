@@ -61,7 +61,6 @@ vmlist ()
 		VBoxManage list runningvms
 	fi
 
-
 }	# ----------  end of function vmlist  ----------
 
 vmssh ()
@@ -73,7 +72,6 @@ vmssh ()
 	ssh -p 2222 "$USER"@127.0.0.1
 
 }	# ----------  end of function vmssh  ----------
-
 
 vmscreen ()
 {
@@ -98,7 +96,6 @@ vmscreen ()
 	VBoxManage controlvm $MACHINE setvideomodehint 1200 800 16
 	echo "Video mode set to 1200x800"
 	xfreerdp "$IP"
-
 
 }	# ----------  end of function vmscreen  ----------
 
@@ -158,7 +155,6 @@ startvm ()
 
 }	# ----------  end of function startvm  ----------
 
-
 stopvm ()
 {
 	if [ -z "$1"  ]
@@ -171,7 +167,6 @@ stopvm ()
 
 }	# ----------  end of function stopvm  ----------
 
-
 savevm ()
 {
 	if [ -z "$1"  ]
@@ -183,7 +178,6 @@ savevm ()
 	fi
 
 }	# ----------  end of function savevm  ----------
-
 
 vmvrde ()
 {
@@ -201,7 +195,6 @@ vmvrde ()
 
 	VBoxManage modifyvm "$1" --vrde on --vrdeaddress "$2"
 	return 0
-
 
 }	# ----------  end of function vmvrde  ----------
 
