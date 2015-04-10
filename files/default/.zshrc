@@ -19,7 +19,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-export EDITOR='vim'	# vim is the default editor
+export EDITOR='nvim'	# vim is the default editor
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -74,11 +74,11 @@ ZSH_TMUX_AUTOQUIT=false
 
 # User configuration
 
-export PATH="/usr/local/sbin:$HOME/.rvm/gems/ruby-2.1.5/bin:$HOME/.rvm/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/git/bin:$HOME/.rvm/gems/ruby-2.1.5/bin:$HOME/.rvm/gems/ruby-2.1.5@global/bin:$HOME/.rvm/rubies/ruby-2.1.5/bin:/usr/local/heroku/bin"
+export PATH="/usr/local/sbin:$HOME/.rvm/gems/ruby-2.1.5/bin:$HOME/.rvm/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/git/bin:$HOME/.rvm/gems/ruby-2.1.5/bin:$HOME/.rvm/gems/ruby-2.1.5@global/bin:$HOME/.rvm/rubies/ruby-2.1.5/bin:/usr/local/heroku/bin:$HOME/.git-custom"
 
-export NVM_DIR="/Users/cjpoll/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-#source $(brew --prefix nvm)/nvm.sh
+export NVM_DIR="$HOME/.nvm"
+source $(brew --prefix nvm)/nvm.sh
+#[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -115,7 +115,7 @@ case $OSTYPE in
 	*) alias ls='ls -ahlvF --color --group-directories-first';;
 esac
 
-DEVENVSET_DIR=~/developer/devenvset;
+DEVENVSET_DIR=~/devenvset;
 
 function updatedots()
 {
@@ -149,8 +149,10 @@ function untrackedFiles()
 	git ls-files --others --exclude-standard;
 }
 
+alias ignore='$EDITOR ~/.gitignore-global'
 alias resource='source ~/.zshrc'
 alias tmuxrc="$EDITOR ~/.tmux.conf"
+alias vim="nvim"
 alias vimrc="$EDITOR ~/.vimrc"
 alias x='exit'
 alias zshrc="$EDITOR ~/.zshrc"

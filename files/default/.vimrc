@@ -8,31 +8,33 @@ call vundle#begin()
 Plugin 'gmarik/vundle'
 
 " Vundle Packages {{{
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'ChrisKempson/Tomorrow-Theme', {'rtp': 'vim/'}
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'MarcWeber/vim-addon-mw-utils' 				" Required for vim-snipmate
-Plugin 'majutsushi/tagbar'
-Plugin 'mklabs/grunt.vim'
-Plugin 'mileszs/ack.vim'
-Plugin 'PProvost/vim-ps1'
-Plugin 'scrooloose/nerdtree'
-"Plugin 'scrooloose/syntastic'
-Plugin 'sjl/gundo.vim'
-Plugin 'tomtom/tlib_vim'							" Required for vim-snipmate
-Plugin 'tpope/vim-cucumber'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-rails'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-surround'
-"Plugin 'Valloric/YouCompleteMe'
-Plugin 'vim-scripts/bash-support.vim'
-Plugin 'vim-scripts/L9'
-Plugin 'vim-scripts/FuzzyFinder'
+Plugin 'altercation/vim-colors-solarized'             " Second best theme. Good in light.
+Plugin 'bling/vim-airline'                            " Lightweight Powerline
+Plugin 'ChrisKempson/Tomorrow-Theme', {'rtp': 'vim/'} " Best. Theme. Ever.
+Plugin 'christoomey/vim-tmux-navigator'               " TMUX integration
+Plugin 'garbas/vim-snipmate'                          " Saves tons of typing. Google it.
+Plugin 'honza/vim-snippets'                           " Premade snippets
+Plugin 'jelera/vim-javascript-syntax'                 " Fixes javascript syntax
+Plugin 'jiangmiao/auto-pairs'                         " Auto-pairs parens & others
+Plugin 'kchmck/vim-coffee-script'                     " CoffeeScript Syntax
+Plugin 'MarcWeber/vim-addon-mw-utils' 				        " Required for vim-snipmate
+Plugin 'majutsushi/tagbar'                            " View ctags info in pane
+Plugin 'mileszs/ack.vim'                              " Ack integration
+Plugin 'mustache/vim-mustache-handlebars'             " Handlebars stuff
+Plugin 'nathanaelkane/vim-indent-guides'              " Fixes JS indent error
+Plugin 'pangloss/vim-javascript'                      " A JS plugin recommended on net
+Plugin 'scrooloose/nerdtree'                          " Opens a file browser
+"Plugin 'scrooloose/syntastic'                         " Syntax checker
+Plugin 'sjl/gundo.vim'                                " Lets you view your undo tree
+Plugin 'tomtom/tlib_vim'							                " Required for vim-snipmate
+Plugin 'tpope/vim-fugitive'                           " Git integration
+Plugin 'tpope/vim-rails'                              " Makes deving on rails easier
+Plugin 'vim-ruby/vim-ruby'                            " Some ruby nav stuff
+Plugin 'tpope/vim-surround'                           " Auto-surround text (quotes, html, etc.)
+"Plugin 'Valloric/YouCompleteMe'                       " Auto-complete. Requires compile.
+Plugin 'vim-scripts/bash-support.vim'                 " Bash stuff
+Plugin 'vim-scripts/L9'                               " Required for FuzzyFinder
+Plugin 'vim-scripts/FuzzyFinder'                      " Great file/buffer navigation
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -46,9 +48,9 @@ set omnifunc=syntaxcomplete#Complete
 " }}}
 
 " Powerline Setup {{{
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
+"python from powerline.vim import setup as powerline_setup
+"python powerline_setup()
+"python del powerline_setup
 
 " Always show statusline
  set laststatus=2
@@ -58,56 +60,60 @@ set t_Co=256"
 " }}}
 
 " Global variables {{{
-let g:syntastic_java_checkers=['javac']
-let g:syntastic_java_javac_config_file_enabled=1
-let g:syntastic_mode_map = { 'passive_filetypes': ['sass', 'scss', 'haml'] }
+let g:airline_powerline_fonts = 1
 "let g:syntastic_scss_checkers=['sassc']
-let g:erlangFoldSplitFunction=1
 let g:solarized_termcolors=256
 let g:BASH_AuthorName='Cody Poll'
 let g:BASH_Email='CJPoll@gmail.com'
-" }}} 
+let g:erlangFoldSplitFunction=1
+let g:syntastic_java_checkers=['javac']
+let g:syntastic_java_javac_config_file_enabled=1
+let g:syntastic_mode_map = { 'passive_filetypes': ['sass', 'scss', 'haml'] }
+" }}}
 
 "Personal settings {{{
-set laststatus=2   				" Always show the statusline                             
-set encoding=utf-8 				" Necessary to show Unicode glyphs
-set t_Co=256 					" Explicitly tell Vim that the terminal supports 256 colors
+set laststatus=2   				          " Always show the statusline
+set encoding=utf-8 				          " Necessary to show Unicode glyphs
+set t_Co=256 					              " Explicitly tell Vim that the terminal supports 256 colors
 
-colorscheme Tomorrow-Night
-set background=dark 				" Sets the background color (dark|light)
-set backspace=indent,eol,start		" Backspace works correctly
-set cursorline					" Highlights the current line
-set fileformat=unix				" Sets the file format
-set foldenable					" Enables code folding
-set hlsearch					" Highlight search results
-set ignorecase					" Ignore case when searching
-set incsearch					" Search while typing
-set nobackup					" Don't make backup files
-set noswapfile					" Don't make annoying swap files
-set number						" Line numbers
-set ruler						" Show which column the cursor is on
-set scrolloff=8					" Start scrolling when cursor is x lines from edge
-set shell=/bin/zsh					" What shell to start on :shell command
-"set shellcmdflag=-i	 			" Load .bash_profile when running shell commands
-" (Allows aliases), but vim tends to drop to the back
-set showcmd						" Shows info about the current command at the bottom
-set smartcase					" Only search with case if capitals are used
-set tw=80 						" Text Width = 80 characters
-set wildmenu					" Autocomplete done right
-set wildmode=full				" Autocomplete done right
-syntax on						" Syntax highlighting
+colorscheme Tomorrow-Night-Eighties
+set background=dark 			          " Sets the background color (dark|light)
+set backspace=indent,eol,start		  " Backspace works correctly
+set cursorline					            " Highlights the current line
+set fileformat=unix				          " Sets the file format
+set foldenable					            " Enables code folding
+set foldmethod=syntax
+set foldlevel=1
+set hlsearch					              " Highlight search results
+set ignorecase				              " Ignore case when searching
+set incsearch					              " Search while typing
+set nobackup					              " Don't make backup files
+set noswapfile				              " Don't make annoying swap files
+set number						              " Line numbers
+set path=$PWD/**                    " Sets the path for easier navigation
+set ruler						                " Show which column the cursor is on
+set scrolloff=8				              " Start scrolling when cursor is x lines from edge
+set shell=/bin/zsh		              " What shell to start on :shell command
+"set shellcmdflag=-i	              " Load .bash_profile when running shell commands
+                                    " (Allows aliases), but vim tends to drop to the back
+set showcmd						              " Shows info about the current command at the bottom
+set smartcase					              " Only search with case if capitals are used
+set tw=80 						              " Text Width = 80 characters
+set wildmenu					              " Autocomplete done right
+set wildmode=full			              " Autocomplete done right
+syntax on						                " Syntax highlighting
 
 " Change background color past 80 columns
-execute "set colorcolumn=" . join(range(81,335), ',')
-"set colorcolumn=80
+"execute "set colorcolumn=" . join(range(81,335), ',')
+set colorcolumn=80
 
 " Tab settings
 
-set smartindent			" Smart auto-indenting
-set autoindent			" Automatically indent new lines
-set tabstop=4			" How many spaces tabs are indented
-set shiftwidth=4 		" How many spaces autoindent should indent 
-"set expandtab 			" Turns tabs into spaces (number of spaces = tabstop)
+set smartindent			                " Smart auto-indenting
+set autoindent			                " Automatically indent new lines
+set tabstop=2			                  " How many spaces tabs are indented
+set shiftwidth=2 		                " How many spaces autoindent should indent
+set expandtab 			                " Turns tabs into spaces (number of spaces == tabstop)
 
 set showbreak=↪
 " }}}
@@ -131,7 +137,7 @@ nnoremap <leader>gp :Git push<CR>
 " }}}
 
 " Easy alignment
-nnoremap <leader>i gg=G 			
+nnoremap <leader>i gg=G
 
 " Easy vimrc edit
 nnoremap <leader>vv :vsplit $MYVIMRC<CR>
@@ -200,7 +206,7 @@ nnoremap <C-l> <C-w><Right>
 " Easy move to the above window
 nnoremap <C-k> <C-w><Up>
 
-" Easy move to the below window 
+" Easy move to the below window
 nnoremap <C-j> <C-w><Down>
 
 " Easy move to the window to the left
@@ -234,86 +240,18 @@ augroup filetype_vim
 	autocmd FileType vim setlocal foldmethod=marker
 augroup END
 
-augroup erlang 
-	autocmd!
-	autocmd FileType erlang nnoremap <buffer> <localleader>e :!make eunit<CR>
-	autocmd FileType erlang nnoremap <buffer> <localleader>r :!make test<CR>
-	autocmd FileType erlang nnoremap <buffer> <localleader>d :!rm -rf doc; make docs<CR>
-	autocmd FileType erlang nnoremap <buffer> <localleader>m :!make rel<CR>
-	autocmd FileType erlang nnoremap <buffer> <localleader>p :!make deps<CR>
-	autocmd FileType erlang nnoremap <buffer> <localleader>c :!make compile<CR>
-	autocmd FileType erlang nnoremap <buffer> <localleader>t :ErlangTags<CR>
-	autocmd FileType erlang nnoremap <buffer> <localleader>l :!chromium-browser ./apps/*/logs/all_runs.html<CR>
-	autocmd FileType erlang nnoremap <buffer> <localleader>] lbi_<ESC>
-	autocmd FileType erlang nnoremap <buffer> <localleader><localleader>] :.s/\(\<[A-Z]\)/_\1/g<CR>
-	autocmd FileType erlang nnoremap <buffer> <localleader><localleader>[ :.s/_\([A-Z]\)/\1/g<CR>
-augroup END
-
-augroup python
-	autocmd!
-	autocmd FileType python nnoremap <buffer> <localleader>p :PROJECT<CR>
-augroup END
-
-augroup haml
-	autocmd!
-	autocmd FileType haml nnoremap <buffer> <localleader>rs :Rserv<CR>
-	autocmd FileType haml nnoremap <buffer> <localleader>r :!rake<CR>
-	autocmd FileType haml nnoremap <buffer> <localleader>m :Emodel 
-	autocmd FileType haml nnoremap <buffer> <localleader>c :Econtroller  
-	autocmd FileType haml nnoremap <buffer> <localleader>v :Eview 
-	autocmd FileType haml nnoremap <buffer> <localleader>M ]M
-	autocmd FileType haml nnoremap <buffer> <leader>m ]m
-	autocmd FileType haml nnoremap <buffer> <leader><leader>m [m
-	autocmd FileType haml nnoremap <buffer> <leader><leader>M [M
-	au! FileType haml set noexpandtab sts=0 sw=4 ts=4
-augroup END
-
-augroup ruby 
-	autocmd!
-	autocmd FileType ruby nnoremap <buffer> <localleader>rs :Rserv<CR>
-	autocmd FileType ruby nnoremap <buffer> <localleader>r :!rake<CR>
-	autocmd FileType ruby nnoremap <buffer> <localleader>m :Emodel 
-	autocmd FileType ruby nnoremap <buffer> <localleader>c :Econtroller  
-	autocmd FileType ruby nnoremap <buffer> <localleader>v :Eview 
-	autocmd FileType ruby nnoremap <buffer> <localleader>M ]M
-	autocmd FileType ruby nnoremap <buffer> <leader>m ]m
-	autocmd FileType ruby nnoremap <buffer> <leader><leader>m [m
-	autocmd FileType ruby nnoremap <buffer> <leader><leader>M [M
-augroup END 
-
-augroup eruby 
-	autocmd!
-	autocmd FileType eruby nnoremap <buffer> <localleader>rs :Rserv<CR>
-	autocmd FileType eruby nnoremap <buffer> <localleader>r :!rake<CR>
-	autocmd FileType eruby nnoremap <buffer> <localleader>m :Emodel 
-	autocmd FileType eruby nnoremap <buffer> <localleader>c :Econtroller  
-	autocmd FileType eruby nnoremap <buffer> <localleader>v :Eview 
-	autocmd FileType eruby nnoremap <buffer> <localleader>M ]M
-	autocmd FileType eruby nnoremap <buffer> <leader>m ]m
-	autocmd FileType eruby nnoremap <buffer> <leader><leader>m [m
-	autocmd FileType eruby nnoremap <buffer> <leader><leader>M [M
-augroup END 
-
-augroup java
-	autocmd!
-	autocmd FileType java nnoremap <buffer> <localleader>r :!make test<CR>
-augroup END
-
-augroup reload_vimrc 
+augroup reload_vimrc
 	autocmd!
 	autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
 
-augroup hard
-	autocmd!
-	" Hard mode: No arrow keys or hjkl
-	" nnoremap h			<nop>
-	" nnoremap j			<nop>
-	" nnoremap k			<nop>
-	" nnoremap l			<nop>
-	" nnoremap <Right>	<nop>
-	" nnoremap <Left>		<nop>
-	" nnoremap <Up>		<nop>
-	" nnoremap <Down>		<nop>
+augroup javascript
+  autocmd!
+  autocmd FileType javascript call JavaScriptFold()
+augroup END
+
+augroup coffeescript
+  autocmd!
+  autocmd BufNewFile,BufReadPost *.coffee setlocal foldmethod=indent
 augroup END
 " }}}
