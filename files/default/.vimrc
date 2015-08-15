@@ -9,13 +9,15 @@ Plugin 'gmarik/vundle'
 
 " Vundle Packages {{{
 Plugin 'altercation/vim-colors-solarized'             " Second best theme. Good in light.
-Plugin 'bling/vim-airline'                            " Lightweight Powerline
-Plugin 'ChrisKempson/Tomorrow-Theme', {'rtp': 'vim/'} " Best. Theme. Ever.
+"Plugin 'bling/vim-airline'                            " Lightweight Powerline
+Plugin 'chriskempson/base16-vim'
 Plugin 'christoomey/vim-tmux-navigator'               " TMUX integration
+Plugin 'fishcakez/vim-rebar'						  " Rebar integration
 Plugin 'garbas/vim-snipmate'                          " Saves tons of typing. Google it.
 Plugin 'honza/vim-snippets'                           " Premade snippets
 Plugin 'jelera/vim-javascript-syntax'                 " Fixes javascript syntax
 Plugin 'jiangmiao/auto-pairs'                         " Auto-pairs parens & others
+Plugin 'git://github.com/jsx/jsx.vim.git'             " JSX support
 Plugin 'kchmck/vim-coffee-script'                     " CoffeeScript Syntax
 Plugin 'MarcWeber/vim-addon-mw-utils' 				        " Required for vim-snipmate
 Plugin 'majutsushi/tagbar'                            " View ctags info in pane
@@ -23,16 +25,19 @@ Plugin 'mileszs/ack.vim'                              " Ack integration
 Plugin 'mustache/vim-mustache-handlebars'             " Handlebars stuff
 Plugin 'nathanaelkane/vim-indent-guides'              " Fixes JS indent error
 Plugin 'pangloss/vim-javascript'                      " A JS plugin recommended on net
+Plugin 'rdnetto/YCM-Generator'
 Plugin 'scrooloose/nerdtree'                          " Opens a file browser
-"Plugin 'scrooloose/syntastic'                         " Syntax checker
+Plugin 'scrooloose/syntastic'                         " Syntax checker - too slow
 Plugin 'sjl/gundo.vim'                                " Lets you view your undo tree
+Plugin 'terryma/vim-multiple-cursors'                 " Multiple selectors
 Plugin 'tomtom/tlib_vim'							                " Required for vim-snipmate
+Plugin 'tmhedberg/matchit'                           " % also matches (X/HT)ML
 Plugin 'tpope/vim-fugitive'                           " Git integration
 Plugin 'tpope/vim-rails'                              " Makes deving on rails easier
 Plugin 'vim-ruby/vim-ruby'                            " Some ruby nav stuff
 Plugin 'tpope/vim-surround'                           " Auto-surround text (quotes, html, etc.)
-"Plugin 'Valloric/YouCompleteMe'                       " Auto-complete. Requires compile.
-Plugin 'vim-scripts/bash-support.vim'                 " Bash stuff
+Plugin 'Valloric/YouCompleteMe'                      " Auto-complete. Requires compile.
+Plugin 'vim-scripts/zoomwintab.vim'                   " Zooms a tab into a specific pane
 Plugin 'vim-scripts/L9'                               " Required for FuzzyFinder
 Plugin 'vim-scripts/FuzzyFinder'                      " Great file/buffer navigation
 
@@ -48,9 +53,9 @@ set omnifunc=syntaxcomplete#Complete
 " }}}
 
 " Powerline Setup {{{
-"python from powerline.vim import setup as powerline_setup
-"python powerline_setup()
-"python del powerline_setup
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
 
 " Always show statusline
  set laststatus=2
@@ -61,14 +66,35 @@ set t_Co=256"
 
 " Global variables {{{
 let g:airline_powerline_fonts = 1
-"let g:syntastic_scss_checkers=['sassc']
 let g:solarized_termcolors=256
 let g:BASH_AuthorName='Cody Poll'
 let g:BASH_Email='CJPoll@gmail.com'
 let g:erlangFoldSplitFunction=1
-let g:syntastic_java_checkers=['javac']
 let g:syntastic_java_javac_config_file_enabled=1
 let g:syntastic_mode_map = { 'passive_filetypes': ['sass', 'scss', 'haml'] }
+let base16colorspace=256
+
+" Syntastic Settings
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_enable_signs = 1
+
+" Syntastic checkers
+"let g:syntastic_scss_checkers=['sassc']
+"let g:syntastic_c_checkers = ['gcc']
+let g:syntastic_coffee_checkers = ['coffeelint', 'coffee']
+"let g:syntastic_css_checkers = ['csslint', 'prettycss']
+"let g:syntastic_eruby_checkers = ['ruby']
+"let g:syntastic_handlebars_checkers = ['handlebars']
+"let g:syntastic_html_checkers = ['jshint', 'tidy', 'w3', 'validator']
+"let g:syntastic_java_checkers = ['javac']
+let g:syntastic_javascript_checkers = ['eslint']
+"let g:syntastic_json_checkers = ['jsonlint', 'jsonval']
+let g:syntastic_jsx_checkers = ['eslint']
+let g:syntastic_ruby_checkers = ['rubocop', 'mri', 'rubylint']
+"let g:syntastic_sh_checkers = ['bashate', 'sh', 'shellcheck']
 " }}}
 
 "Personal settings {{{
@@ -76,7 +102,7 @@ set laststatus=2   				          " Always show the statusline
 set encoding=utf-8 				          " Necessary to show Unicode glyphs
 set t_Co=256 					              " Explicitly tell Vim that the terminal supports 256 colors
 
-colorscheme Tomorrow-Night-Eighties
+colorscheme base16-bright
 set background=dark 			          " Sets the background color (dark|light)
 set backspace=indent,eol,start		  " Backspace works correctly
 set cursorline					            " Highlights the current line
@@ -87,6 +113,7 @@ set foldlevel=1
 set hlsearch					              " Highlight search results
 set ignorecase				              " Ignore case when searching
 set incsearch					              " Search while typing
+set list listchars=tab:❘-,trail:·
 set nobackup					              " Don't make backup files
 set noswapfile				              " Don't make annoying swap files
 set number						              " Line numbers
@@ -111,9 +138,9 @@ set colorcolumn=80
 
 set smartindent			                " Smart auto-indenting
 set autoindent			                " Automatically indent new lines
-set tabstop=2			                  " How many spaces tabs are indented
-set shiftwidth=2 		                " How many spaces autoindent should indent
-set expandtab 			                " Turns tabs into spaces (number of spaces == tabstop)
+set tabstop=4			                  " How many spaces tabs are indented
+set shiftwidth=4 		                " How many spaces autoindent should indent
+"set expandtab 			                " Turns tabs into spaces (number of spaces == tabstop)
 
 set showbreak=↪
 " }}}
@@ -129,7 +156,7 @@ let localleader="\\"
 nnoremap ; :
 
 " Git Mappings {{{
-nnoremap <leader>ga :Git add 
+nnoremap <leader>ga :Git add
 nnoremap <leader>gs :Git status<CR>
 nnoremap <leader>gc :Git commit -v<CR>
 nnoremap <leader>gca :Git commit -v --amend<CR>
@@ -145,6 +172,10 @@ nnoremap <leader>vd :source $MYVIMRC<CR>
 
 " Refresh FuzzyFinder File Cache
 nnoremap <leader>cf :FufRenewCache<CR>
+
+" Zoom tab into window
+nnoremap <leader>zi :ZoomWinTabIn<CR>
+nnoremap <leader>zo :ZoomWinTabOut<CR>
 
 " Easy insert-mode escape
 inoremap jk <ESC>
@@ -215,6 +246,9 @@ nnoremap <C-h> <C-w><Left>
 " TagbarToggle
 nnoremap <leader>n :TagbarToggle<CR>
 
+" Jump to tagbar
+nnoremap <leader><leader>n <C-w>2l
+
 " GundoToggle
 nnoremap <leader>G :GundoToggle<CR>
 
@@ -235,6 +269,15 @@ nnoremap <leader><leader>s <C-w>r
 " }}}
 
 " augroups {{{
+augroup haml
+	autocmd!
+	autocmd! FileType haml set smartindent
+	autocmd! FileType haml set autoindent
+	autocmd! FileType haml set tabstop=4
+	autocmd! FileType haml set shiftwidth=4
+	autocmd! FileType haml set noexpandtab
+augroup END
+
 augroup filetype_vim
 	autocmd!
 	autocmd FileType vim setlocal foldmethod=marker
@@ -243,6 +286,11 @@ augroup END
 augroup reload_vimrc
 	autocmd!
 	autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END
+
+augroup jsx
+  autocmd!
+  autocmd FileType jsx setf javascript.jsx
 augroup END
 
 augroup javascript
@@ -255,3 +303,5 @@ augroup coffeescript
   autocmd BufNewFile,BufReadPost *.coffee setlocal foldmethod=indent
 augroup END
 " }}}
+set exrc
+set secure
