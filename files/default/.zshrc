@@ -1,4 +1,4 @@
-#!/bin/zsh  
+#!/bin/zsh
 #===============================================================================
 #
 #          FILE: zshrc
@@ -111,7 +111,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 case $OSTYPE in
-	darwin*) alias ls='ls -ahlFG';; 
+	darwin*) alias ls='ls -ahlFG';;
 	solaris*) alias ls='ls -ahlF';;
 	*) alias ls='ls -ahlvF --color --group-directories-first';;
 esac
@@ -155,24 +155,19 @@ function jspec()
   JS_SPEC_MATCHER=**/*/$1.js bundle exec rake js:dev
 }
 
-alias be='bundle exec'
-alias spec='bundle exec rspec'
-alias ignore='$EDITOR ~/.gitignore-global'
-alias resource='source ~/.zshrc'
-alias tmuxrc="$EDITOR ~/.tmux.conf"
-alias vimrc="$EDITOR ~/.vimrc"
-alias x='exit'
-alias zshrc="$EDITOR ~/.zshrc"
-
-autoload -U up-line-or-beginning-search
-autoload -U down-line-or-beginning-search
-autoload edit-command-line
+alias be='bundle exec';
+alias spec='bundle exec rspec';
+alias resource='source ~/.zshrc';
+alias tmuxrc="$EDITOR ~/.tmux.conf";
+alias vimrc="$EDITOR ~/.vimrc";
+alias x='exit';
+alias zshrc="$EDITOR ~/.zshrc";
 
 #[[ -n "${key[Up]}"  ]] && bindkey "${key[Up]}" up-line-or-beginning-search
 #[[ -n "${key[Down]}"  ]] && bindkey "${key[Down]}" down-line-or-beginning-search
 
-set -o vi  			# Use vi mode in the shell
+set -o vi;  			# Use vi mode in the shell
 
 # Base16 Shell
-BASE16_SHELL="$HOME/.config/base16-shell/base16-bright.dark.sh"
-[[ -s $BASE16_SHELL  ]] && source $BASE16_SHELL
+BASE16_SHELL="$HOME/.config/base16-shell/base16-bright.dark.sh";
+[[ -s $BASE16_SHELL  ]] && source $BASE16_SHELL;

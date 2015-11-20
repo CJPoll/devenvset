@@ -9,29 +9,26 @@ Plugin 'gmarik/vundle'
 
 " Vundle Packages {{{
 Plugin 'altercation/vim-colors-solarized'             " Second best theme. Good in light.
-"Plugin 'bling/vim-airline'                            " Lightweight Powerline
+Plugin 'bling/vim-airline'                            " Lightweight Powerline
 Plugin 'chriskempson/base16-vim'
 Plugin 'christoomey/vim-tmux-navigator'               " TMUX integration
-Plugin 'fishcakez/vim-rebar'						  " Rebar integration
+Plugin 'elixir-lang/vim-elixir'
 Plugin 'garbas/vim-snipmate'                          " Saves tons of typing. Google it.
 Plugin 'honza/vim-snippets'                           " Premade snippets
 Plugin 'jelera/vim-javascript-syntax'                 " Fixes javascript syntax
 Plugin 'jiangmiao/auto-pairs'                         " Auto-pairs parens & others
-Plugin 'git://github.com/jsx/jsx.vim.git'             " JSX support
 Plugin 'kchmck/vim-coffee-script'                     " CoffeeScript Syntax
 Plugin 'MarcWeber/vim-addon-mw-utils' 				        " Required for vim-snipmate
 Plugin 'majutsushi/tagbar'                            " View ctags info in pane
 Plugin 'mileszs/ack.vim'                              " Ack integration
-Plugin 'mustache/vim-mustache-handlebars'             " Handlebars stuff
 Plugin 'nathanaelkane/vim-indent-guides'              " Fixes JS indent error
 Plugin 'pangloss/vim-javascript'                      " A JS plugin recommended on net
-Plugin 'rdnetto/YCM-Generator'
+Plugin 'rdnetto/YCM-Generator'                        " Required for YCM
 Plugin 'scrooloose/nerdtree'                          " Opens a file browser
-Plugin 'scrooloose/syntastic'                         " Syntax checker - too slow
+Plugin 'scrooloose/syntastic'                         " Syntax checker
 Plugin 'sjl/gundo.vim'                                " Lets you view your undo tree
-Plugin 'terryma/vim-multiple-cursors'                 " Multiple selectors
 Plugin 'tomtom/tlib_vim'							                " Required for vim-snipmate
-Plugin 'tmhedberg/matchit'                           " % also matches (X/HT)ML
+Plugin 'tmhedberg/matchit'                            " % also matches (X/HT)ML
 Plugin 'tpope/vim-fugitive'                           " Git integration
 Plugin 'tpope/vim-rails'                              " Makes deving on rails easier
 Plugin 'vim-ruby/vim-ruby'                            " Some ruby nav stuff
@@ -53,12 +50,12 @@ set omnifunc=syntaxcomplete#Complete
 " }}}
 
 " Powerline Setup {{{
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
+"python from powerline.vim import setup as powerline_setup
+"python powerline_setup()
+"python del powerline_setup
 
 " Always show statusline
- set laststatus=2
+set laststatus=2
 
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set t_Co=256"
@@ -92,8 +89,8 @@ let g:syntastic_coffee_checkers = ['coffeelint', 'coffee']
 "let g:syntastic_java_checkers = ['javac']
 let g:syntastic_javascript_checkers = ['eslint']
 "let g:syntastic_json_checkers = ['jsonlint', 'jsonval']
-let g:syntastic_jsx_checkers = ['eslint']
-let g:syntastic_ruby_checkers = ['rubocop', 'mri', 'rubylint']
+"let g:syntastic_jsx_checkers = ['eslint']
+let g:syntastic_ruby_checkers = [] "['rubocop']
 "let g:syntastic_sh_checkers = ['bashate', 'sh', 'shellcheck']
 " }}}
 
@@ -122,7 +119,7 @@ set ruler						                " Show which column the cursor is on
 set scrolloff=8				              " Start scrolling when cursor is x lines from edge
 set shell=/bin/zsh		              " What shell to start on :shell command
 "set shellcmdflag=-i	              " Load .bash_profile when running shell commands
-                                    " (Allows aliases), but vim tends to drop to the back
+" (Allows aliases), but vim tends to drop to the back
 set showcmd						              " Shows info about the current command at the bottom
 set smartcase					              " Only search with case if capitals are used
 set tw=80 						              " Text Width = 80 characters
@@ -138,9 +135,9 @@ set colorcolumn=80
 
 set smartindent			                " Smart auto-indenting
 set autoindent			                " Automatically indent new lines
-set tabstop=4			                  " How many spaces tabs are indented
-set shiftwidth=4 		                " How many spaces autoindent should indent
-"set expandtab 			                " Turns tabs into spaces (number of spaces == tabstop)
+set tabstop=2			                  " How many spaces tabs are indented
+set shiftwidth=2 		                " How many spaces autoindent should indent
+set expandtab 			                " Turns tabs into spaces (number of spaces == tabstop)
 
 set showbreak=↪
 " }}}
@@ -232,16 +229,20 @@ nnoremap <leader>b :FufBuffer<CR>
 nnoremap <leader>d :FufDir<CR>
 
 " Easy move to the window to the right
-nnoremap <C-l> <C-w><Right>
+nnoremap <C-l> <C-w>l
 
 " Easy move to the above window
-nnoremap <C-k> <C-w><Up>
+nnoremap <C-k> <C-w>k
 
 " Easy move to the below window
-nnoremap <C-j> <C-w><Down>
+nnoremap <C-j> <C-w>j
 
+if has('nvim')
+	nmap <BS> <C-W>h
+	tnoremap <Esc> <C-\><C-n>
+endif
 " Easy move to the window to the left
-nnoremap <C-h> <C-w><Left>
+nnoremap <C-h> <C-w>h
 
 " TagbarToggle
 nnoremap <leader>n :TagbarToggle<CR>
@@ -288,19 +289,33 @@ augroup reload_vimrc
 	autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
 
+augroup ruby
+	autocmd!
+	autocmd! FileType ruby set smartindent
+	autocmd! FileType ruby set autoindent
+	autocmd! FileType ruby set tabstop=2
+	autocmd! FileType ruby set shiftwidth=2
+	autocmd! FileType ruby set expandtab
+augroup END
+
 augroup jsx
-  autocmd!
-  autocmd FileType jsx setf javascript.jsx
+	autocmd!
+	autocmd FileType jsx setf javascript
 augroup END
 
 augroup javascript
-  autocmd!
-  autocmd FileType javascript call JavaScriptFold()
+	autocmd!
+	autocmd FileType javascript call JavaScriptFold()
+	autocmd! FileType javascript set smartindent			                " Smart auto-indenting
+	autocmd! FileType javascript set autoindent			                " Automatically indent new lines
+	autocmd! FileType javascript set tabstop=4			                  " How many spaces tabs are indented
+	autocmd! FileType javascript set shiftwidth=4 		                " How many spaces autoindent should indent
+	autocmd! FileType javascript set noexpandtab 			                " Turns tabs into spaces (number of spaces == tabstop)
 augroup END
 
 augroup coffeescript
-  autocmd!
-  autocmd BufNewFile,BufReadPost *.coffee setlocal foldmethod=indent
+	autocmd!
+	autocmd BufNewFile,BufReadPost *.coffee setlocal foldmethod=indent
 augroup END
 " }}}
 set exrc
