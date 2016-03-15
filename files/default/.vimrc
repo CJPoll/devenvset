@@ -30,13 +30,17 @@ Plugin 'sjl/gundo.vim'                                " Lets you view your undo 
 Plugin 'tomtom/tlib_vim'							                " Required for vim-snipmate
 Plugin 'tmhedberg/matchit'                            " % also matches (X/HT)ML
 Plugin 'tpope/vim-fugitive'                           " Git integration
+Plugin 'tpope/vim-git'                                " Git commit syntax stuff
 Plugin 'tpope/vim-rails'                              " Makes deving on rails easier
 Plugin 'vim-ruby/vim-ruby'                            " Some ruby nav stuff
 Plugin 'tpope/vim-surround'                           " Auto-surround text (quotes, html, etc.)
-Plugin 'Valloric/YouCompleteMe'                      " Auto-complete. Requires compile.
+"Plugin 'Valloric/YouCompleteMe'                      " Auto-complete. Requires compile.
 Plugin 'vim-scripts/zoomwintab.vim'                   " Zooms a tab into a specific pane
 Plugin 'vim-scripts/L9'                               " Required for FuzzyFinder
 Plugin 'vim-scripts/FuzzyFinder'                      " Great file/buffer navigation
+Plugin 'Yggdroot/indentLine'
+
+Plugin 'ctags.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -67,8 +71,7 @@ let g:solarized_termcolors=256
 let g:BASH_AuthorName='Cody Poll'
 let g:BASH_Email='CJPoll@gmail.com'
 let g:erlangFoldSplitFunction=1
-let g:syntastic_java_javac_config_file_enabled=1
-let g:syntastic_mode_map = { 'passive_filetypes': ['sass', 'scss', 'haml'] }
+let g:syntastic_mode_map = { 'passive_filetypes': ['sass', 'scss', 'haml', 'ruby'] }
 let base16colorspace=256
 
 " Syntastic Settings
@@ -81,15 +84,15 @@ let g:syntastic_enable_signs = 1
 " Syntastic checkers
 "let g:syntastic_scss_checkers=['sassc']
 "let g:syntastic_c_checkers = ['gcc']
-let g:syntastic_coffee_checkers = ['coffeelint', 'coffee']
+let g:syntastic_coffee_checkers = []
 "let g:syntastic_css_checkers = ['csslint', 'prettycss']
 "let g:syntastic_eruby_checkers = ['ruby']
 "let g:syntastic_handlebars_checkers = ['handlebars']
 "let g:syntastic_html_checkers = ['jshint', 'tidy', 'w3', 'validator']
-"let g:syntastic_java_checkers = ['javac']
+let g:syntastic_java_checkers = []
 let g:syntastic_javascript_checkers = ['eslint']
 "let g:syntastic_json_checkers = ['jsonlint', 'jsonval']
-"let g:syntastic_jsx_checkers = ['eslint']
+let g:syntastic_jsx_checkers = ['eslint']
 let g:syntastic_ruby_checkers = [] "['rubocop']
 "let g:syntastic_sh_checkers = ['bashate', 'sh', 'shellcheck']
 " }}}
@@ -110,9 +113,9 @@ set foldlevel=1
 set hlsearch					              " Highlight search results
 set ignorecase				              " Ignore case when searching
 set incsearch					              " Search while typing
-set list listchars=tab:❘-,trail:·
+"set list listchars=tab:❘-,trail:·
 set nobackup					              " Don't make backup files
-set noswapfile				              " Don't make annoying swap files
+"set noswapfile				              " Don't make annoying swap files
 set number						              " Line numbers
 set path=$PWD/**                    " Sets the path for easier navigation
 set ruler						                " Show which column the cursor is on
@@ -303,6 +306,8 @@ augroup jsx
 	autocmd FileType jsx setf javascript
 augroup END
 
+au BufNewFile,BufRead *.es6 setlocal ft=javascript
+
 augroup javascript
 	autocmd!
 	autocmd FileType javascript call JavaScriptFold()
@@ -313,6 +318,11 @@ augroup javascript
 	autocmd! FileType javascript set noexpandtab 			                " Turns tabs into spaces (number of spaces == tabstop)
 augroup END
 
+augroup gitcommit
+  autocmd!
+  autocmd! FileType gitcommit set textwidth=72  " Git commits should be 72 lines
+augroup END
+
 augroup coffeescript
 	autocmd!
 	autocmd BufNewFile,BufReadPost *.coffee setlocal foldmethod=indent
@@ -320,3 +330,20 @@ augroup END
 " }}}
 set exrc
 set secure
+
+let g:tagbar_type_elixir = {
+    \ 'ctagstype' : 'elixir',
+    \ 'kinds' : [
+        \ 'f:functions',
+        \ 'functions:functions',
+        \ 'c:callbacks',
+        \ 'd:delegates',
+        \ 'e:exceptions',
+        \ 'i:implementations',
+        \ 'a:macros',
+        \ 'o:operators',
+        \ 'm:modules',
+        \ 'p:protocols',
+        \ 'r:records'
+        \ ]
+      \ }

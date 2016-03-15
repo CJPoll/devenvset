@@ -17,15 +17,16 @@
 #      REVISION:  ---
 #===============================================================================
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh;
 
-export EDITOR='vim'	# vim is the default editor
+export EDITOR='vim';	# vim is the default editor
+export DISABLE_AUTO_TITLE=true;
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="agnoster"
+ZSH_THEME="agnoster";
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -65,25 +66,23 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git tmux wd)
+plugins=(git tmux wd mix)
 
 # Plugin Configuration
-#export TERM="screen-256color"
-ZSH_TMUX_AUTOSTART=true
-ZSH_TMUX_AUTOQUIT=false
+export TERM="screen-256color";
+ZSH_TMUX_AUTOSTART=true;
+ZSH_TMUX_AUTOQUIT=false;
 
 # User configuration
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/git/bin:/usr/local/heroku/bin:$HOME/.git-custom"
-source /usr/local/share/chruby/chruby.sh
-source /usr/local/share/chruby/auto.sh
+export PATH="$HOME/scripts:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/git/bin:/usr/local/heroku/bin:$HOME/.git-custom";
 
-export NVM_DIR="$HOME/.nvm"
-source $(brew --prefix nvm)/nvm.sh
+export NVM_DIR="$HOME/.nvm";
+source $(brew --prefix nvm)/nvm.sh;
 #[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 # export MANPATH="/usr/local/man:$MANPATH"
 
-source $ZSH/oh-my-zsh.sh
+source $ZSH/oh-my-zsh.sh;
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -116,7 +115,7 @@ case $OSTYPE in
 	*) alias ls='ls -ahlvF --color --group-directories-first';;
 esac
 
-DEVENVSET_DIR=~/devenvset;
+DEVENVSET_DIR=~/dev/devenvset;
 
 function updatedots()
 {
@@ -150,9 +149,11 @@ function untrackedFiles()
 	git ls-files --others --exclude-standard;
 }
 
-function jspec()
+function script()
 {
-  JS_SPEC_MATCHER=**/*/$1.js bundle exec rake js:dev
+  SCRIPT_NAME=$1;
+  vim $HOME/scripts/${SCRIPT_NAME}
+  chmod u+x $HOME/scripts/${SCRIPT_NAME}
 }
 
 alias be='bundle exec';
@@ -171,3 +172,7 @@ set -o vi;  			# Use vi mode in the shell
 # Base16 Shell
 BASE16_SHELL="$HOME/.config/base16-shell/base16-bright.dark.sh";
 [[ -s $BASE16_SHELL  ]] && source $BASE16_SHELL;
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export SECRET="47538907a0115cfc33621bf919cdbf655a64361518cbee2967e2e90506abc25f39dc40b447f7712997ef05b109371b5ba5596612da0f1daf0db7829cab23b6c3";
+bindkey '^r' history-incremental-search-backward
