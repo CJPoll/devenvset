@@ -2,11 +2,11 @@
 #===============================================================================
 #
 #          FILE: zshrc
-# 
-#         USAGE: ./zshrc 
-# 
-#   DESCRIPTION: 
-# 
+#
+#         USAGE: ./zshrc
+#
+#   DESCRIPTION: My ZSHRC file
+#
 #       OPTIONS: ---
 #  REQUIREMENTS: ---
 #          BUGS: ---
@@ -75,11 +75,8 @@ ZSH_TMUX_AUTOQUIT=false;
 
 # User configuration
 
-export PATH="$HOME/scripts:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/git/bin:/usr/local/heroku/bin:$HOME/.git-custom";
+export PATH="$HOME/scripts:/opt/X11/bin:/usr/local/heroku/bin:$HOME/.git-custom:/usr/local/sbin:${PATH}";
 
-export NVM_DIR="$HOME/.nvm";
-source $(brew --prefix nvm)/nvm.sh;
-#[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh;
@@ -110,50 +107,56 @@ source $ZSH/oh-my-zsh.sh;
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 case $OSTYPE in
-	darwin*) alias ls='ls -ahlFG';;
-	solaris*) alias ls='ls -ahlF';;
-	*) alias ls='ls -ahlvF --color --group-directories-first';;
+  darwin*) alias ls='ls -ahlFG';;
+  solaris*) alias ls='ls -ahlF';;
+  *) alias ls='ls -ahlvF --color --group-directories-first';;
 esac
 
 DEVENVSET_DIR=~/dev/devenvset;
 
 function updatedots()
 {
-	copyDotFile ".tmux.conf" 	&& \
-		copyDotFile ".vimrc" 	&& \
-		copyDotFile ".bashrc" 	&& \
-		copyDotFile ".zshrc" 	&& \
-		pushDevenvset;
+  copyDotFile ".tmux.conf" 	&& \
+    copyDotFile ".vimrc" 	&& \
+    copyDotFile ".bashrc" 	&& \
+    copyDotFile ".zshrc" 	&& \
+    pushDevenvset;
 }
 
 function copyDotFile()
 {
-	DOT_FILE=$1;
+  DOT_FILE=$1;
 
-	cp ~/${DOT_FILE} ${DEVENVSET_DIR}/files/default;
+  cp ~/${DOT_FILE} ${DEVENVSET_DIR}/files/default;
 }
 
 function pushDevenvset()
 {
-	pushd .;
-	cd ${DEVENVSET_DIR};
+  pushd .;
+  cd ${DEVENVSET_DIR};
 
-	git add .;
-	git commit -v;
-	git push origin master;
- 	popd;
+  git add .;
+  git commit -v;
+  git push origin master;
+  popd;
 }
 
 function untrackedFiles()
 {
-	git ls-files --others --exclude-standard;
+  git ls-files --others --exclude-standard;
 }
 
 function script()
 {
   SCRIPT_NAME=$1;
-  vim $HOME/scripts/${SCRIPT_NAME}
-  chmod u+x $HOME/scripts/${SCRIPT_NAME}
+  vim $HOME/scripts/${SCRIPT_NAME};
+  chmod u+x $HOME/scripts/${SCRIPT_NAME};
+}
+
+function dev()
+{
+  PROGRAM_NAME=${1};
+  cd "${HOME}/dev/${PROGRAM_NAME}";
 }
 
 alias be='bundle exec';
@@ -170,9 +173,9 @@ alias zshrc="$EDITOR ~/.zshrc";
 set -o vi;  			# Use vi mode in the shell
 
 # Base16 Shell
-BASE16_SHELL="$HOME/.config/base16-shell/base16-bright.dark.sh";
+BASE16_SHELL="$HOME/.config/base16-shell/scripts/base16-bright.dark.sh";
 [[ -s $BASE16_SHELL  ]] && source $BASE16_SHELL;
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-export SECRET="47538907a0115cfc33621bf919cdbf655a64361518cbee2967e2e90506abc25f39dc40b447f7712997ef05b109371b5ba5596612da0f1daf0db7829cab23b6c3";
-bindkey '^r' history-incremental-search-backward
+bindkey '^r' history-incremental-search-backward;
+source "$HOME/.asdf/asdf.sh";
+source "$HOME/.asdf/completions/asdf.bash";
