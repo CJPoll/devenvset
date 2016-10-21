@@ -9,32 +9,35 @@ Plugin 'gmarik/vundle'
 
 " Vundle Packages {{{
 Plugin 'altercation/vim-colors-solarized'             " Second best theme. Good in light.
-Plugin 'bling/vim-airline'                            " Lightweight Powerline
+"Plugin 'bling/vim-airline'                            " Lightweight Powerline
 Plugin 'chriskempson/base16-vim'
 Plugin 'christoomey/vim-tmux-navigator'               " TMUX integration
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'elixir-lang/vim-elixir'
-Plugin 'garbas/vim-snipmate'                          " Saves tons of typing. Google it.
+Plugin 'fatih/vim-go'
+"Plugin 'garbas/vim-snipmate'                          " Saves tons of typing. Google it.
+Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'                           " Premade snippets
 Plugin 'jelera/vim-javascript-syntax'                 " Fixes javascript syntax
 Plugin 'jiangmiao/auto-pairs'                         " Auto-pairs parens & others
 Plugin 'kchmck/vim-coffee-script'                     " CoffeeScript Syntax
-Plugin 'MarcWeber/vim-addon-mw-utils' 				        " Required for vim-snipmate
 Plugin 'majutsushi/tagbar'                            " View ctags info in pane
 Plugin 'mileszs/ack.vim'                              " Ack integration
+Plugin 'mmorearty/elixir-ctags'
 Plugin 'nathanaelkane/vim-indent-guides'              " Fixes JS indent error
 Plugin 'pangloss/vim-javascript'                      " A JS plugin recommended on net
 Plugin 'rdnetto/YCM-Generator'                        " Required for YCM
 Plugin 'scrooloose/nerdtree'                          " Opens a file browser
 Plugin 'scrooloose/syntastic'                         " Syntax checker
+"Plugin 'slashmili/alchemist.vim'
 Plugin 'sjl/gundo.vim'                                " Lets you view your undo tree
-Plugin 'tomtom/tlib_vim'							                " Required for vim-snipmate
 Plugin 'tmhedberg/matchit'                            " % also matches (X/HT)ML
 Plugin 'tpope/vim-fugitive'                           " Git integration
 Plugin 'tpope/vim-git'                                " Git commit syntax stuff
 Plugin 'tpope/vim-rails'                              " Makes deving on rails easier
 Plugin 'vim-ruby/vim-ruby'                            " Some ruby nav stuff
 Plugin 'tpope/vim-surround'                           " Auto-surround text (quotes, html, etc.)
-"Plugin 'Valloric/YouCompleteMe'                      " Auto-complete. Requires compile.
+Plugin 'Valloric/YouCompleteMe'                      " Auto-complete. Requires compile.
 Plugin 'vim-scripts/zoomwintab.vim'                   " Zooms a tab into a specific pane
 Plugin 'vim-scripts/L9'                               " Required for FuzzyFinder
 Plugin 'vim-scripts/FuzzyFinder'                      " Great file/buffer navigation
@@ -54,9 +57,9 @@ set omnifunc=syntaxcomplete#Complete
 " }}}
 
 " Powerline Setup {{{
-"python from powerline.vim import setup as powerline_setup
-"python powerline_setup()
-"python del powerline_setup
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
 
 " Always show statusline
 set laststatus=2
@@ -106,6 +109,7 @@ colorscheme base16-bright
 set background=dark 			          " Sets the background color (dark|light)
 set backspace=indent,eol,start		  " Backspace works correctly
 set cursorline					            " Highlights the current line
+set exrc
 set fileformat=unix				          " Sets the file format
 set foldenable					            " Enables code folding
 set foldmethod=syntax
@@ -118,6 +122,7 @@ set nobackup					              " Don't make backup files
 "set noswapfile				              " Don't make annoying swap files
 set number						              " Line numbers
 set path=$PWD/**                    " Sets the path for easier navigation
+set re=1
 set ruler						                " Show which column the cursor is on
 set scrolloff=8				              " Start scrolling when cursor is x lines from edge
 set shell=/bin/zsh		              " What shell to start on :shell command
@@ -138,11 +143,13 @@ set colorcolumn=80
 
 set smartindent			                " Smart auto-indenting
 set autoindent			                " Automatically indent new lines
-set tabstop=2			                  " How many spaces tabs are indented
-set shiftwidth=2 		                " How many spaces autoindent should indent
-set expandtab 			                " Turns tabs into spaces (number of spaces == tabstop)
+set tabstop=4			                  " How many spaces tabs are indented
+set shiftwidth=4 		                " How many spaces autoindent should indent
+set noexpandtab 			                " Turns tabs into spaces (number of spaces == tabstop)
 
 set showbreak=↪
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
 " }}}
 
 " Leader settings {{{
@@ -273,13 +280,14 @@ nnoremap <leader><leader>s <C-w>r
 " }}}
 
 " augroups {{{
-augroup haml
-	autocmd!
-	autocmd! FileType haml set smartindent
-	autocmd! FileType haml set autoindent
-	autocmd! FileType haml set tabstop=4
-	autocmd! FileType haml set shiftwidth=4
-	autocmd! FileType haml set noexpandtab
+augroup go
+  autocmd!
+  autocmd! FileType go nnoremap <localleader>r :GoRun<CR>
+	autocmd! FileType ruby set smartindent
+	autocmd! FileType ruby set autoindent
+	autocmd! FileType ruby set tabstop=4
+	autocmd! FileType ruby set shiftwidth=4
+	autocmd! FileType ruby set noexpandtab
 augroup END
 
 augroup filetype_vim
@@ -318,14 +326,18 @@ augroup javascript
 	autocmd! FileType javascript set noexpandtab 			                " Turns tabs into spaces (number of spaces == tabstop)
 augroup END
 
+augroup yaml
+	autocmd!
+	autocmd! FileType yaml setlocal smartindent			                " Smart auto-indenting
+	autocmd! FileType yaml setlocal autoindent			                " Automatically indent new lines
+	autocmd! FileType yaml setlocal tabstop=2			                  " How many spaces tabs are indented
+	autocmd! FileType yaml setlocal shiftwidth=2 		                " How many spaces autoindent should indent
+	autocmd! FileType yaml setlocal expandtab 			                " Turns tabs into spaces (number of spaces == tabstop)
+augroup END
+
 augroup gitcommit
   autocmd!
   autocmd! FileType gitcommit set textwidth=72  " Git commits should be 72 lines
-augroup END
-
-augroup coffeescript
-	autocmd!
-	autocmd BufNewFile,BufReadPost *.coffee setlocal foldmethod=indent
 augroup END
 " }}}
 set exrc
