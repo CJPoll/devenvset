@@ -105,7 +105,13 @@ set laststatus=2   				          " Always show the statusline
 set encoding=utf-8 				          " Necessary to show Unicode glyphs
 set t_Co=256 					              " Explicitly tell Vim that the terminal supports 256 colors
 
-colorscheme base16-bright
+if filereadable(expand("~/.vimrc_background"))
+	let base16colorspace=256
+	source ~/.vimrc_background
+else
+	colorscheme base16-bright
+endif
+
 set background=dark 			          " Sets the background color (dark|light)
 set backspace=indent,eol,start		  " Backspace works correctly
 set cursorline					            " Highlights the current line
@@ -172,6 +178,10 @@ nnoremap <leader>gp :Git push<CR>
 
 " Easy alignment
 nnoremap <leader>i gg=G
+
+" Easy multiple indent
+vnoremap < <gv
+vnoremap > >gv
 
 " Easy vimrc edit
 nnoremap <leader>vv :vsplit $MYVIMRC<CR>

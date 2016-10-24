@@ -29,10 +29,10 @@ export DISABLE_AUTO_TITLE=true;
 ZSH_THEME="agnoster";
 
 # Uncomment the following line to enable command auto-correction.
- ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
- COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -54,7 +54,7 @@ ZSH_TMUX_AUTOQUIT=false;
 
 # User configuration
 
-export PATH="$HOME/custom/scripts:${HOME}/custom/git-custom:${HOME}/custom/.auto-completions:/opt/X11/bin:/usr/local/heroku/bin:$HOME/.git-custom:/usr/local/sbin:${PATH}";
+export PATH="/opt/X11/bin:/usr/local/heroku/bin:$HOME/.git-custom:/usr/local/sbin:${PATH}";
 
 # This is a base file, intended to work in any environment. If there are changes
 # that should be made for a give environment, they belong in a local zshrc.
@@ -65,6 +65,10 @@ if [[ -a "${LOCAL_RC}" ]]; then
 fi
 
 source $ZSH/oh-my-zsh.sh;
+
+PATH="$HOME/custom/scripts:${HOME}/custom/git-custom:${HOME}/custom/.auto-completions:${PATH}"
+export DEVPATH="${HOME}/custom/scripts:${HOME}/custom/git-custom:${HOME}/custom/.auto-completions:${HOME}/dev";
+export fpath=("${HOME}/custom/.auto-completions" $fpath)
 
 export LANG=en_US.UTF-8
 
@@ -142,13 +146,34 @@ function dev()
   cd "${HOME}/dev/${PROGRAM_NAME}";
 }
 
+function edit()
+{
+	NAME="${1}";
+	FILE=$(which "${NAME}");
+
+	if [[ -a "${FILE}" ]]; then
+		${EDITOR} "${FILE}";
+	else
+		echo "${NAME} does not exist";
+	fi
+}
+
+function init-session()
+{
+	source $(which .init-session);
+}
+
 #[[ -n "${key[Up]}"  ]] && bindkey "${key[Up]}" up-line-or-beginning-search
 #[[ -n "${key[Down]}"  ]] && bindkey "${key[Down]}" down-line-or-beginning-search
 
 set -o vi;  			# Use vi mode in the shell
 
 # Base16 Shell
-BASE16_SHELL="$HOME/.config/base16-shell/scripts/base16-bright.dark.sh";
+BASE16_SHELL="$HOME/.config/base16-shell/";
+[ -n "$PS1"  ] && [ -s $BASE16_SHELL/profile_helper.sh  ] && eval "$($BASE16_SHELL/profile_helper.sh)";
 [[ -s $BASE16_SHELL  ]] && source $BASE16_SHELL;
+base16_bright;
 
 bindkey '^r' history-incremental-search-backward;
+source "$HOME/.asdf/asdf.sh";
+source "$HOME/.asdf/completions/asdf.bash";
