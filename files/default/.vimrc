@@ -71,10 +71,8 @@ set t_Co=256"
 " Global variables {{{
 let g:airline_powerline_fonts = 1
 let g:solarized_termcolors=256
-let g:BASH_AuthorName='Cody Poll'
-let g:BASH_Email='CJPoll@gmail.com'
 let g:erlangFoldSplitFunction=1
-let g:syntastic_mode_map = { 'passive_filetypes': ['sass', 'scss', 'haml', 'ruby'] }
+let g:syntastic_mode_map = { 'passive_filetypes': ['sass', 'scss', 'ruby'] }
 let base16colorspace=256
 
 " Syntastic Settings
@@ -85,18 +83,11 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_signs = 1
 
 " Syntastic checkers
-"let g:syntastic_scss_checkers=['sassc']
 "let g:syntastic_c_checkers = ['gcc']
 let g:syntastic_coffee_checkers = []
-"let g:syntastic_css_checkers = ['csslint', 'prettycss']
-"let g:syntastic_eruby_checkers = ['ruby']
 "let g:syntastic_handlebars_checkers = ['handlebars']
-"let g:syntastic_html_checkers = ['jshint', 'tidy', 'w3', 'validator']
-let g:syntastic_java_checkers = []
 let g:syntastic_javascript_checkers = ['eslint']
-"let g:syntastic_json_checkers = ['jsonlint', 'jsonval']
 let g:syntastic_jsx_checkers = ['eslint']
-let g:syntastic_ruby_checkers = [] "['rubocop']
 "let g:syntastic_sh_checkers = ['bashate', 'sh', 'shellcheck']
 " }}}
 
@@ -178,10 +169,6 @@ nnoremap <leader>gp :Git push<CR>
 
 " Easy alignment
 nnoremap <leader>i gg=G
-
-" Easy multiple indent
-vnoremap < <gv
-vnoremap > >gv
 
 " Easy vimrc edit
 nnoremap <leader>vv :vsplit $MYVIMRC<CR>
@@ -291,8 +278,8 @@ nnoremap <leader><leader>s <C-w>r
 
 " augroups {{{
 augroup go
-  autocmd!
-  autocmd! FileType go nnoremap <localleader>r :GoRun<CR>
+	autocmd!
+	autocmd! FileType go nnoremap <localleader>r :GoRun<CR>
 	autocmd! FileType ruby set smartindent
 	autocmd! FileType ruby set autoindent
 	autocmd! FileType ruby set tabstop=4

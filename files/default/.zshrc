@@ -54,7 +54,7 @@ ZSH_TMUX_AUTOQUIT=false;
 
 # User configuration
 
-export PATH="/opt/X11/bin:/usr/local/heroku/bin:$HOME/.git-custom:/usr/local/sbin:${PATH}";
+export PATH="/opt/X11/bin:/usr/local/heroku/bin:/usr/local/bin:/usr/local/sbin:${PATH}";
 
 # This is a base file, intended to work in any environment. If there are changes
 # that should be made for a give environment, they belong in a local zshrc.
@@ -136,8 +136,11 @@ function untrackedFiles()
 function script()
 {
   SCRIPT_NAME=$1;
-  vim $HOME/scripts/${SCRIPT_NAME};
-  chmod u+x $HOME/scripts/${SCRIPT_NAME};
+  SCRIPT_DIR="${HOME}/custom/scripts"
+  FILE_NAME="${SCRIPT_DIR}/${SCRIPT_NAME}"
+
+  vim "${FILE_NAME}";
+  chmod u+x "${FILE_NAME}";
 }
 
 function dev()
