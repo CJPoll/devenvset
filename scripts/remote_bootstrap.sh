@@ -20,7 +20,14 @@ else
 	SSH_STRING="${REMOTE_USER}@${IP}"
 fi
 
-echo "Running: ssh ${SSH_STRING} \"touch thisworkedagain\"";
-
+echo "Uploading bootstrap script:";
+echo;
 scp "./scripts/${OS}_bootstrap.sh" "${SSH_STRING}:bootstrap";
+echo;
+echo "Bootstrap Script Uploaded!";
+
+echo
+echo "Running Bootstrap Script:"
 ssh "${SSH_STRING}" "./bootstrap";
+echo
+echo "Bootstrap Script Completed!";
