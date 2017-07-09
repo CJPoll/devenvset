@@ -1,0 +1,2 @@
+%{"coach": {:git, "git@github.com:cjpoll/coach", "625a5b95e722ba0a117c24445d3c35661f7d39b6", [ref: "master"]},
+  "dialyxir": {:hex, :dialyxir, "0.5.0", "5bc543f9c28ecd51b99cc1a685a3c2a1a93216990347f259406a910cf048d1d7", [:mix], [], "hexpm"}}
