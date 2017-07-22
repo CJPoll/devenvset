@@ -15,4 +15,15 @@ defmodule Devenvset.Setup do
     copy from: {:priv, "dotfiles/.psqlrc"}, to: {:home, @dev_account, ".psqlrc"}, chown: @dev_account
     copy from: {:priv, "dotfiles/.tmux.conf"}, to: {:home, @dev_account, ".tmux.conf"}, chown: @dev_account
   end
+
+  defplay :prep_postgres do
+    shell "wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | apt-key add -"
+    shell "echo \"deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main\" >> /etc/apt/sources.list.d/pgdg.list"
+
+  end
+
+  defplay :install_infrastructure do
+    play :prep_postgres
+    install packages: ["rabbitmq-server", "kk"]
+  end
 end
