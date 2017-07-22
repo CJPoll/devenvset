@@ -25,6 +25,6 @@ defmodule Devenvset.Setup do
 
   defplay :install_infrastructure do
     #play :prep_postgres
-    install packages: ["postgres", "postgres-contrib", "rabbitmq-server", "redis-server", "redis-tools"], on: :debian
+    install packages: ["postgresql", "postgresql-contrib", "rabbitmq-server", "redis-server", "redis-tools"], on: :debian
   end
 end
