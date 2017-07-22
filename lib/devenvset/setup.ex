@@ -19,11 +19,12 @@ defmodule Devenvset.Setup do
   defplay :prep_postgres do
     shell "wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | apt-key add -"
     shell "echo \"deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main\" >> /etc/apt/sources.list.d/pgdg.list"
+    shell "apt-get update"
 
   end
 
   defplay :install_infrastructure do
-    play :prep_postgres
-    install packages: ["rabbitmq-server", "kk"]
+    #play :prep_postgres
+    install packages: ["postgres", "postgres-contrib", "rabbitmq-server", "redis-server", "redis-tools"], on: :debian
   end
 end
