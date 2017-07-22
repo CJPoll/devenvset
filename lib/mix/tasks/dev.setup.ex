@@ -4,6 +4,6 @@ defmodule Mix.Tasks.Dev.Setup do
   alias Coach.Cmd
 
   def run(_) do
-    Devenvset.Setup.copy_dotfiles() |> Cmd.run
+    Devenvset.Setup.copy_dotfiles(run_as: "cjpoll") |> Cmd.run
   end
 end

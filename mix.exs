@@ -16,7 +16,7 @@ defmodule Devenvset.Mixfile do
   end
 
   defp deps do
-    [{:coach, git: "git@github.com:cjpoll/coach", ref: "master"},
+    [{:coach, git: "git@github.com:cjpoll/coach", ref: "dev"},
      {:dialyxir, "~> 0.5.0"}]
   end
 end
