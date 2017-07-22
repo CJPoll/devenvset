@@ -3,8 +3,9 @@ defmodule Devenvset.Setup do
 
   @dev_account "dev"
 
-  defplay :create_user do
+  defplay :setup_user do
     create_user user: @dev_account, home: "/home/#{@dev_account}"
+    change_shell user: @dev_account, shell: "/bin/bash"
   end
 
   defplay :copy_dotfiles do
