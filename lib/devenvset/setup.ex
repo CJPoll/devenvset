@@ -27,6 +27,7 @@ defmodule Devenvset.Setup do
     play :prep_postgres
     install packages: ["postgresql-9.6", "postgresql-contrib-9.6", "rabbitmq-server", "redis-server", "redis-tools"], on: :debian
     delete file: "/lib/systemd/system/postgresql.service"
+    shell "systemctl daemon-reload"
     service action: :start, services: ["postgres", "rabbitmq-server", "redis-server"]
   end
 end
