@@ -84,8 +84,6 @@ export LANG=en_US.UTF-8
 
 # aliases
 
-alias be='bundle exec';
-alias spec='bundle exec rspec';
 alias resource="source ${HOME}/.zshrc";
 alias tmuxrc="$EDITOR ${HOME}/.tmux.conf";
 alias vimrc="$EDITOR ${HOME}/.vimrc";

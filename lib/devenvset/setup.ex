@@ -32,8 +32,9 @@ defmodule Devenvset.Setup do
   end
 
   defplay :tmux do
-    install packages: ["zsh", "tmux", "powerline"], on: :debian
+    install packages: ["zsh", "tmux", "powerline", "curl"], on: :debian
     change_shell user: @dev_account, shell: "/bin/zsh"
+    shell "curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
     git_clone repo: "git@github.com:tmux-plugins/tpm", to: {:home, @dev_account, ".tmux/plugins/tpm"}
   end
 end
