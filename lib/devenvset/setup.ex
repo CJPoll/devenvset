@@ -5,7 +5,6 @@ defmodule Devenvset.Setup do
 
   defplay :setup_user do
     create_user user: @dev_account, home: "/home/#{@dev_account}"
-    change_shell user: @dev_account, shell: "/bin/bash"
   end
 
   defplay :copy_dotfiles do
@@ -30,5 +29,11 @@ defmodule Devenvset.Setup do
     shell "systemctl daemon-reload"
     service action: :start, services: ["rabbitmq-server", "redis-server"]
     service action: :restart, service: "postgresql"
+  end
+
+  defplay :tmux do
+    install packages: ["zsh", "tmux", "powerline"], on: :debian
+    change_shell user: @dev_account, shell: "/bin/zsh"
+    git_clone repo: "git@github.com:tmux-plugins/tpm", to: {:home, @dev_account, ".tmux/plugins/tpm"}
   end
 end

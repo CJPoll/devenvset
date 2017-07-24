@@ -8,5 +8,6 @@ defmodule Mix.Tasks.Dev.Setup do
     Devenvset.Setup.setup_user() |> Cmd.run
     Devenvset.Setup.copy_dotfiles() |> Cmd.run
     Devenvset.Setup.install_infrastructure |> Cmd.run
+    Devenvset.Setup.tmux |> Cmd.run
   end
 end
