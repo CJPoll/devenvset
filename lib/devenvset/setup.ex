@@ -49,14 +49,14 @@ defmodule Devenvset.Setup do
   end
 
   defplay :asdf do
-    ASDF.add_plugin("erlang", "https://github.com/asdf-vm/asdf-erlang")
-    ASDF.add_plugin("elixir", "https://github.com/asdf-vm/asdf-elixir")
+    ASDF.add_plugin("erlang", "https://github.com/asdf-vm/asdf-erlang", {:home, @dev_account, "./asdf/bin/asdf"})
+    ASDF.add_plugin("elixir", "https://github.com/asdf-vm/asdf-elixir", {:home, @dev_account, "./asdf/bin/asdf"})
 
-    ASDF.install_version("erlang", "19.3")
-    ASDF.set_global("erlang", "19.3")
+    ASDF.install_version("erlang", "19.3", {:home, @dev_account, "./asdf/bin/asdf"})
+    ASDF.set_global("erlang", "19.3", {:home, @dev_account, "./asdf/bin/asdf"})
 
-    ASDF.install_version("elixir", "1.4.5")
-    ASDF.set_global("elixir", "1.4.5")
+    ASDF.install_version("elixir", "1.4.5", {:home, @dev_account, "./asdf/bin/asdf"})
+    ASDF.set_global("elixir", "1.4.5", {:home, @dev_account, "./asdf/bin/asdf"})
   end
 
   defplay :setup_postgres do
