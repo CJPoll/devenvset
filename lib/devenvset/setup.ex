@@ -37,6 +37,7 @@ defmodule Devenvset.Setup do
     mkdir {:home, @dev_account, ".oh-my-zsh"}
     git_clone repo: "git@github.com:robbyrussell/oh-my-zsh.git", to: {:home, @dev_account, ".oh-my-zsh"}
     git_clone repo: "git@github.com:tmux-plugins/tpm", to: {:home, @dev_account, ".tmux/plugins/tpm"}
+    git_clone repo: "git@github.com:cjpoll/custom", to: {:home, @dev_account, "custom"}
   end
 
   defplay :setup_postgres do
