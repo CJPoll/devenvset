@@ -1,6 +1,6 @@
 defmodule Devenvset.Setup do
   use Coach.Playbook
-  use Coach.Play.Postgres
+  alias Coach.Play.Postgres
 
   @dev_account "dev"
 
@@ -39,6 +39,6 @@ defmodule Devenvset.Setup do
   end
 
   defplay :setup_postgres do
-    Postgres.create_user @dev_account, permissions: [:superuser]
+    Postgres.create_user user: @dev_account, permissions: [:superuser]
   end
 end
