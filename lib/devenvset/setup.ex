@@ -46,8 +46,8 @@ defmodule Devenvset.Setup do
 
   defplay :asdf do
     git_clone repo: "git@github.com:asdf-vm/asdf", to: {:home, @dev_account, ".asdf"}, branch: "v0.3.0"
-    ASDF.add_plugin("erlang", "git@github.com:asdf-vm/asdf-erlang")
-    ASDF.add_plugin("elixir", "git@github.com:asdf-vm/asdf-elixir")
+    ASDF.add_plugin("erlang", "https://github.com/asdf-vm/asdf-erlang")
+    ASDF.add_plugin("elixir", "https://github.com/asdf-vm/asdf-elixir")
 
     ASDF.install_version("erlang", "19.3")
     ASDF.set_global("erlang", "19.3")
