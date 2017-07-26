@@ -45,7 +45,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git tmux mix)
+plugins=(git tmux)
 
 # Plugin Configuration
 export TERM="screen-256color";
@@ -68,7 +68,7 @@ source $ZSH/oh-my-zsh.sh;
 
 PATH="$HOME/custom/scripts:${HOME}/custom/git-custom:${HOME}/custom/.auto-completions:${PATH}"
 export DEVPATH="${HOME}/custom/scripts:${HOME}/custom/git-custom:${HOME}/custom/.auto-completions:${HOME}/dev";
-export fpath=("${HOME}/custom/.auto-completions" $fpath)
+#export fpath=("${HOME}/custom/.auto-completions" $fpath)
 
 export LANG=en_US.UTF-8
 
