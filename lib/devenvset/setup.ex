@@ -1,6 +1,6 @@
 defmodule Devenvset.Setup do
   use Coach.Playbook
-  alias Coach.Play.Postgres
+  alias Coach.Play.{ASDF, Postgres}
 
   @dev_account "dev"
 
@@ -40,7 +40,20 @@ defmodule Devenvset.Setup do
     git_clone repo: "git@github.com:tmux-plugins/tpm", to: {:home, @dev_account, ".tmux/plugins/tpm"}
     git_clone repo: "git@github.com:cjpoll/custom", to: {:home, @dev_account, "custom"}
     git_clone repo: "git@github.com:chriskempson/base16-shell", to: {:home, @dev_account, ".config/base16-shell"}
+
     play :copy_dotfiles
+  end
+
+  defplay :asdf do
+    git_clone repo: "git@github.com:asdf-vm/asdf", to: {:home, @dev_account, ".asdf"}, branch: "v0.3.0"
+    ASDF.add_plugin("erlang", "git@github.com:asdf-vm/asdf-erlang")
+    ASDF.add_plugin("elixir", "git@github.com:asdf-vm/asdf-elixir")
+
+    ASDF.install_version("erlang", "19.3")
+    ASDF.set_global("erlang", "19.3")
+
+    ASDF.install_version("elixir", "1.4.5")
+    ASDF.set_global("elixir", "1.4.5")
   end
 
   defplay :setup_postgres do
