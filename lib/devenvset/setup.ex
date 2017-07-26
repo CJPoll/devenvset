@@ -44,8 +44,11 @@ defmodule Devenvset.Setup do
     play :copy_dotfiles
   end
 
-  defplay :asdf do
+  defplay :install_asdf do
     git_clone repo: "git@github.com:asdf-vm/asdf", to: {:home, @dev_account, ".asdf"}, branch: "v0.3.0"
+  end
+
+  defplay :asdf do
     ASDF.add_plugin("erlang", "https://github.com/asdf-vm/asdf-erlang")
     ASDF.add_plugin("elixir", "https://github.com/asdf-vm/asdf-elixir")
 
