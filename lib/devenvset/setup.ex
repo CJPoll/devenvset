@@ -45,8 +45,9 @@ defmodule Devenvset.Setup do
   end
 
   defplay :install_asdf do
-    git_clone repo: "git@github.com:asdf-vm/asdf", to: {:home, @dev_account, ".asdf"}, branch: "v0.3.0"
+    mv from: {:home, ".asdf"}, to: {:home, @dev_account, ".asdf"}
     chown file: {:home, @dev_account, ".asdf"}, owner: @dev_account, recursive: true
+    symlink from: {:home, ".asdf"}, to: {:home, @dev_account, ".asdf"}
   end
 
   defplay :asdf do
