@@ -1,5 +1,6 @@
 defmodule Devenvset.Setup do
   use Coach.Playbook
+  use Coach.Play.Postgres
 
   @dev_account "dev"
 
@@ -19,7 +20,6 @@ defmodule Devenvset.Setup do
     shell "wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | apt-key add -"
     shell "echo \"deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main\" >> /etc/apt/sources.list.d/pgdg.list"
     shell "apt-get update"
-
   end
 
   defplay :install_infrastructure do
@@ -36,5 +36,9 @@ defmodule Devenvset.Setup do
     change_shell user: @dev_account, shell: "/bin/zsh"
     shell "curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
     git_clone repo: "git@github.com:tmux-plugins/tpm", to: {:home, @dev_account, ".tmux/plugins/tpm"}
+  end
+
+  defplay :setup_postgres do
+    Postgres.create_user @dev_account, permissions: [:superuser]
   end
 end
