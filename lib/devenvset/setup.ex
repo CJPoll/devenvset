@@ -16,6 +16,7 @@ defmodule Devenvset.Setup do
     copy from: {:priv, "dotfiles/.zshrc"}, to: {:home, @dev_account, ".zshrc"}, chown: @dev_account
     copy from: {:priv, "dotfiles/.psqlrc"}, to: {:home, @dev_account, ".psqlrc"}, chown: @dev_account
     copy from: {:priv, "dotfiles/.tmux.conf"}, to: {:home, @dev_account, ".tmux.conf"}, chown: @dev_account
+    copy from: {:priv, "dotfiles/.vimrc"}, to: {:home, @dev_account, ".vimrc"}, chown: @dev_account
     copy from: {:home, ".ssh/authorized_keys"}, to: {:home, @dev_account, ".ssh/authorized_keys"}, chown: @dev_account
   end
 
@@ -70,7 +71,7 @@ defmodule Devenvset.Setup do
   end
 
   defplay :editor do
-    git_clone repo: "https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim", to: {:home, @dev_account, ".vim/bundle/Vundle.vim"}
-    chown file: {:home, @dev_account, "./vim"}, recursive: true, owner: @dev_account
+    git_clone repo: "https://github.com/VundleVim/Vundle.vim.git", to: {:home, @dev_account, ".vim/bundle/Vundle.vim"}
+    shell command: "vim", args: ["+PluginInstall", "+qall"]
   end
 end
