@@ -71,6 +71,6 @@ defmodule Devenvset.Setup do
 
   defplay :editor do
     git_clone repo: "https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim", to: {:home, @dev_account, ".vim/bundle/Vundle.vim"}
-    shell command: "vim", arguments: ["+PluginInstall", "+qall"]
+    shell command: "vim", args: ["+PluginInstall", "+qall"]
   end
 end
