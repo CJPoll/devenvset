@@ -68,4 +68,9 @@ defmodule Devenvset.Setup do
   defplay :setup_postgres do
     Postgres.create_user user: @dev_account, permissions: [:superuser], creator: "postgres"
   end
+
+  defplay :editor do
+    git_clone repo: "https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim", to: {:home, @dev_account, ".vim/bundle/Vundle.vim"}
+    shell command: "vim", arguments: ["+PluginInstall", "+qall"]
+  end
 end
