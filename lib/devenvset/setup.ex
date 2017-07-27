@@ -46,6 +46,11 @@ defmodule Devenvset.Setup do
     git_clone repo: "git@github.com:cjpoll/custom", to: {:home, @dev_account, "custom"}
     git_clone repo: "git@github.com:chriskempson/base16-shell", to: {:home, @dev_account, ".config/base16-shell"}
 
+    chown file: {:home, @dev_account, ".oh-my-zsh"}, recursive: true, owner: @dev_account
+    chown file: {:home, @dev_account, ".tmux/plugins/tpm"}, recursive: true, owner: @dev_account
+    chown file: {:home, @dev_account, "custom"}, recursive: true, owner: @dev_account
+    chown file: {:home, @dev_account, ".config/base16-shell"}, recursive: true, owner: @dev_account
+
     play :copy_dotfiles
   end
 
