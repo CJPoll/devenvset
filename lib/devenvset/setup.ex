@@ -45,7 +45,7 @@ defmodule Devenvset.Setup do
   end
 
   defplay :asdf do
-    git_clone "https://github.com/asdf-vm/asdf", to: {:home, @dev_account, ".asdf"}
+    git_clone repo: "https://github.com/asdf-vm/asdf", to: {:home, @dev_account, ".asdf"}
 
     ASDF.add_plugin("erlang", "https://github.com/asdf-vm/asdf-erlang", {:home, @dev_account, ".asdf/bin/asdf"})
     ASDF.add_plugin("elixir", "https://github.com/asdf-vm/asdf-elixir", {:home, @dev_account, ".asdf/bin/asdf"})
