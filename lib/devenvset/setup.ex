@@ -6,6 +6,8 @@ defmodule Devenvset.Setup do
 
   defplay :setup_user do
     create_user user: @dev_account, home: "/home/#{@dev_account}"
+    password user: @dev_account, tmp_password: "changethispasswordimmediately!"
+    sudoer user: @dev_account
   end
 
   defplay :copy_dotfiles do
@@ -24,7 +26,7 @@ defmodule Devenvset.Setup do
 
   defplay :install_infrastructure do
     play :prep_postgres
-    install packages: ["postgresql-9.6", "postgresql-contrib-9.6", "rabbitmq-server", "redis-server", "redis-tools"], on: :debian
+    install packages: ["build-essential", "postgresql-9.6", "postgresql-contrib-9.6", "rabbitmq-server", "redis-server", "redis-tools"], on: :debian
     delete file: "/lib/systemd/system/postgresql.service"
     shell "systemctl daemon-reload"
     service action: :start, services: ["rabbitmq-server", "redis-server"]
@@ -49,12 +51,16 @@ defmodule Devenvset.Setup do
 
     ASDF.add_plugin("erlang", "https://github.com/asdf-vm/asdf-erlang", {:home, @dev_account, ".asdf/bin/asdf"})
     ASDF.add_plugin("elixir", "https://github.com/asdf-vm/asdf-elixir", {:home, @dev_account, ".asdf/bin/asdf"})
+    ASDF.add_plugin("ruby", "https://github.com/asdf-vm/asdf-ruby", {:home, @dev_account, ".asdf/bin/asdf"})
 
     ASDF.install_version("erlang", "19.3", {:home, @dev_account, ".asdf/bin/asdf"})
     ASDF.set_global("erlang", "19.3", {:home, @dev_account, ".asdf/bin/asdf"})
 
     ASDF.install_version("elixir", "1.4.5", {:home, @dev_account, ".asdf/bin/asdf"})
     ASDF.set_global("elixir", "1.4.5", {:home, @dev_account, ".asdf/bin/asdf"})
+
+    ASDF.install_version("ruby", "2.3.1", {:home, @dev_account, ".asdf/bin/asdf"})
+    ASDF.set_global("ruby", "2.3.1", {:home, @dev_account, ".asdf/bin/asdf"})
   end
 
   defplay :setup_postgres do
