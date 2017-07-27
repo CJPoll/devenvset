@@ -36,6 +36,15 @@ defmodule Devenvset.Setup do
     shell command: "sleep", args: ["5"]
   end
 
+  defplay :install_tmux do
+    download from: URI.parse("https://github.com/tmux/tmux/releases/download/2.5/tmux-2.5.tar.gz"), to: {:home, "tmux.tar.gz"}
+
+    mkdir {:home, "tmux"}
+    extract from: {:home, "tmux.tar.gz"}, to: {:home, "tmux"}, strip_components: 1
+
+    shell "cd ~/tmux && ./configure && make && make install"
+  end
+
   defplay :terminal do
     install packages: ["zsh", "libevent-2.0-5", "libevent-dev", "powerline", "curl"], on: :debian
     change_shell user: @dev_account, shell: "/bin/zsh"
@@ -47,7 +56,7 @@ defmodule Devenvset.Setup do
     git_clone repo: "git@github.com:chriskempson/base16-shell", to: {:home, @dev_account, ".config/base16-shell"}
     git_clone repo: "git@github.com:tmux/tmux", to: {:home, @dev_account, "dev/tmux"}
 
-    shell "cd ~#{@dev_account}/dev/tmux && ./configure && make && make install"
+    play :install_tmux
 
     chown file: {:home, @dev_account, ".oh-my-zsh"}, recursive: true, owner: @dev_account
     chown file: {:home, @dev_account, ".tmux/plugins/tpm"}, recursive: true, owner: @dev_account
