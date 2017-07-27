@@ -6,7 +6,7 @@ defmodule Devenvset.Setup do
 
   defplay :setup_user do
     create_user user: @dev_account, home: "/home/#{@dev_account}"
-    password user: @dev_account, password: "changethispasswordimmediately!"
+    password user: @dev_account, password: "changethispasswordimmediately"
     sudoer user: @dev_account
   end
 
