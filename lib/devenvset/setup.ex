@@ -46,7 +46,7 @@ defmodule Devenvset.Setup do
 
   defplay :install_asdf do
     copy from: {:home, ".asdf/."}, to: {:home, @dev_account, ".asdf"}, recursive: true
-    chown file: {:home, @dev_account, ".asdf"}, owner: @dev_account, recursive: true
+    chown file: {:home, @dev_account, ".asdf"}, owner: "#{@dev_account}:#{@dev_account}", recursive: true
   end
 
   defplay :asdf do
