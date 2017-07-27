@@ -11,5 +11,6 @@ defmodule Mix.Tasks.Dev.Setup do
     Devenvset.Setup.setup_postgres(run_as: "postgres") |> Cmd.run
     Devenvset.Setup.terminal() |> Cmd.run
     Devenvset.Setup.asdf(run_as: "dev") |> Cmd.run
+    Devenvset.Setup.editor(run_as: "dev") |> Cmd.run
   end
 end
