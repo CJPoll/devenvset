@@ -37,7 +37,7 @@ defmodule Devenvset.Setup do
   end
 
   defplay :terminal do
-    install packages: ["zsh", "tmux", "powerline", "curl"], on: :debian
+    install packages: ["zsh", "libevent-2.0-5", "libevent-dev", "powerline", "curl"], on: :debian
     change_shell user: @dev_account, shell: "/bin/zsh"
     mkdir {:home, @dev_account, ".oh-my-zsh"}
     mkdir {:home, @dev_account, ".config"}
@@ -45,6 +45,9 @@ defmodule Devenvset.Setup do
     git_clone repo: "git@github.com:tmux-plugins/tpm", to: {:home, @dev_account, ".tmux/plugins/tpm"}
     git_clone repo: "git@github.com:cjpoll/custom", to: {:home, @dev_account, "custom"}
     git_clone repo: "git@github.com:chriskempson/base16-shell", to: {:home, @dev_account, ".config/base16-shell"}
+    git_clone repo: "git@github.com:tmux/tmux", to: {:home, @dev_account, "dev/tmux"}
+
+    shell "cd ~#{@dev_account}/dev/tmux && ./configure && make && make install"
 
     chown file: {:home, @dev_account, ".oh-my-zsh"}, recursive: true, owner: @dev_account
     chown file: {:home, @dev_account, ".tmux/plugins/tpm"}, recursive: true, owner: @dev_account
