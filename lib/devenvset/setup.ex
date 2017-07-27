@@ -45,9 +45,8 @@ defmodule Devenvset.Setup do
   end
 
   defplay :install_asdf do
-    mv from: {:home, ".asdf"}, to: {:home, @dev_account, ".asdf"}
+    copy from: {:home, ".asdf/."}, to: {:home, @dev_account, ".asdf"}, recursive: true
     chown file: {:home, @dev_account, ".asdf"}, owner: @dev_account, recursive: true
-    symlink from: {:home, ".asdf"}, to: {:home, @dev_account, ".asdf"}
   end
 
   defplay :asdf do
