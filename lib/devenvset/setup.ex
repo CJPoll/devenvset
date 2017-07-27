@@ -16,6 +16,7 @@ defmodule Devenvset.Setup do
     copy from: {:priv, "dotfiles/.zshrc"}, to: {:home, @dev_account, ".zshrc"}, chown: @dev_account
     copy from: {:priv, "dotfiles/.psqlrc"}, to: {:home, @dev_account, ".psqlrc"}, chown: @dev_account
     copy from: {:priv, "dotfiles/.tmux.conf"}, to: {:home, @dev_account, ".tmux.conf"}, chown: @dev_account
+    copy from: {:home, ".ssh/authorized_keys"}, to: {:home, @dev_account, ".ssh/authorized_keys"}, chown: @dev_account
   end
 
   defplay :prep_postgres do
