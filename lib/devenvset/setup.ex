@@ -31,6 +31,7 @@ defmodule Devenvset.Setup do
     shell "systemctl daemon-reload"
     service action: :start, services: ["rabbitmq-server", "redis-server"]
     service action: :restart, service: "postgresql"
+    shell command: "sleep", args: ["5"]
   end
 
   defplay :terminal do
