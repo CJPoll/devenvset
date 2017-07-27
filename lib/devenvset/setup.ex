@@ -44,12 +44,9 @@ defmodule Devenvset.Setup do
     play :copy_dotfiles
   end
 
-  defplay :install_asdf do
-    copy from: {:home, ".asdf/."}, to: {:home, @dev_account, ".asdf"}, recursive: true
-    chown file: {:home, @dev_account, ".asdf"}, owner: "#{@dev_account}:#{@dev_account}", recursive: true
-  end
-
   defplay :asdf do
+    git_clone "https://github.com/asdf-vm/asdf", to: {:home, @dev_account, ".asdf"}
+
     ASDF.add_plugin("erlang", "https://github.com/asdf-vm/asdf-erlang", {:home, @dev_account, ".asdf/bin/asdf"})
     ASDF.add_plugin("elixir", "https://github.com/asdf-vm/asdf-elixir", {:home, @dev_account, ".asdf/bin/asdf"})
 
