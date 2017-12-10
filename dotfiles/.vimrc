@@ -26,7 +26,7 @@ Plugin 'tmhedberg/matchit'                            " % also matches (X/HT)ML
 Plugin 'tpope/vim-fugitive'                           " Git integration
 Plugin 'tpope/vim-git'                                " Git commit syntax stuff
 Plugin 'tpope/vim-surround'                           " Auto-surround text (quotes, html, etc.)
-Plugin 'Valloric/YouCompleteMe'                      " Auto-complete. Requires compile.
+"Plugin 'Valloric/YouCompleteMe'                      " Auto-complete. Requires compile.
 Plugin 'vim-scripts/zoomwintab.vim'                   " Zooms a tab into a specific pane
 
 Plugin 'ctags.vim'
