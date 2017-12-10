@@ -20,31 +20,6 @@ defmodule Devenvset.Setup do
     copy from: {:home, ".ssh/authorized_keys"}, to: {:home, @dev_account, ".ssh/authorized_keys"}, chown: @dev_account
   end
 
-  defplay :prep_postgres do
-    shell "wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | apt-key add -"
-    shell "echo \"deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main\" >> /etc/apt/sources.list.d/pgdg.list"
-    shell "apt-get update"
-  end
-
-  defplay :install_infrastructure do
-    play :prep_postgres
-    install packages: ["build-essential", "postgresql-9.6", "postgresql-contrib-9.6", "rabbitmq-server", "redis-server", "redis-tools"], on: :debian
-    delete file: "/lib/systemd/system/postgresql.service"
-    shell "systemctl daemon-reload"
-    service action: :start, services: ["rabbitmq-server", "redis-server"]
-    service action: :restart, service: "postgresql"
-    shell command: "sleep", args: ["5"]
-  end
-
-  defplay :install_tmux do
-    download from: URI.parse("https://github.com/tmux/tmux/releases/download/2.5/tmux-2.5.tar.gz"), to: {:home, "tmux.tar.gz"}
-
-    mkdir {:home, "tmux"}
-    extract from: {:home, "tmux.tar.gz"}, to: {:home, "tmux"}, strip_components: 1
-
-    shell "cd ~/tmux && ./configure && make && make install"
-  end
-
   defplay :terminal do
     install packages: ["zsh", "libevent-2.0-5", "libevent-dev", "powerline", "curl"], on: :debian
     change_shell user: @dev_account, shell: "/bin/zsh"
@@ -64,27 +39,6 @@ defmodule Devenvset.Setup do
     chown file: {:home, @dev_account, ".config/base16-shell"}, recursive: true, owner: @dev_account
 
     play :copy_dotfiles
-  end
-
-  defplay :asdf do
-    git_clone repo: "https://github.com/asdf-vm/asdf", to: {:home, @dev_account, ".asdf"}
-
-    ASDF.add_plugin("erlang", "https://github.com/asdf-vm/asdf-erlang", {:home, @dev_account, ".asdf/bin/asdf"})
-    ASDF.add_plugin("elixir", "https://github.com/asdf-vm/asdf-elixir", {:home, @dev_account, ".asdf/bin/asdf"})
-    ASDF.add_plugin("ruby", "https://github.com/asdf-vm/asdf-ruby", {:home, @dev_account, ".asdf/bin/asdf"})
-
-    ASDF.install_version("erlang", "19.3", {:home, @dev_account, ".asdf/bin/asdf"})
-    ASDF.set_global("erlang", "19.3", {:home, @dev_account, ".asdf/bin/asdf"})
-
-    ASDF.install_version("elixir", "1.4.5", {:home, @dev_account, ".asdf/bin/asdf"})
-    ASDF.set_global("elixir", "1.4.5", {:home, @dev_account, ".asdf/bin/asdf"})
-
-    ASDF.install_version("ruby", "2.3.1", {:home, @dev_account, ".asdf/bin/asdf"})
-    ASDF.set_global("ruby", "2.3.1", {:home, @dev_account, ".asdf/bin/asdf"})
-  end
-
-  defplay :setup_postgres do
-    Postgres.create_user user: @dev_account, permissions: [:superuser], creator: "postgres"
   end
 
   defplay :editor do
