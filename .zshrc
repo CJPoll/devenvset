@@ -25,7 +25,8 @@ export DISABLE_AUTO_TITLE=true;
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="sunaku";
+#ZSH_THEME="sunaku";
+ZSH_THEME="agnoster";
 
 # Uncomment the following line to enable command auto-correction.
 #ENABLE_CORRECTION="true"
@@ -53,25 +54,35 @@ ZSH_TMUX_AUTOQUIT=false;
 
 # User configuration
 
-export PATH="${HOME}/.local/bin:/opt/X11/bin:/usr/local/heroku/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/bin:/sbin";
+path_append()
+{
+	export PATH="${PATH}:${1}"
+}
 
-if [[ -a "${LOCAL_RC}" ]]; then
-	echo "Sourcing Local RC"
-  source "${LOCAL_RC}";
-fi
+path_prepend()
+{
+	export PATH="${1}:${PATH}"
+}
 
-source $ZSH/oh-my-zsh.sh;
+export PATH="${HOME}/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/bin:/sbin";
 
 # This is a base file, intended to work in any environment. If there are changes
 # that should be made for a give environment, they belong in a local zshrc.
 LOCAL_RC="${HOME}/.zshrc.local";
 
-PATH="${HOME}/custom/scripts:${HOME}/custom/git-custom:${HOME}/custom/.auto-completions:${PATH}";
-export GOPATH="${HOME}/dev/go";
+if [[ -a "${LOCAL_RC}" ]]; then
+  source "${LOCAL_RC}";
+fi
+
+source $ZSH/oh-my-zsh.sh;
+
+path_prepend "${HOME}/custom/.auto-completions";
+path_prepend "${HOME}/custom/git-custom";
+path_prepend "${HOME}/custom/scripts";
+
 export fpath=("${HOME}/custom/.auto-completions" $fpath);
 
-
-export DEVPATH="${HOME}/custom/scripts:${HOME}/custom/git-custom:${HOME}/custom/.auto-completions:${HOME}/dev:${GOPATH}/src:${GOPATH}/src/github.com/*";
+export DEVPATH="${HOME}/custom/scripts:${HOME}/custom/git-custom:${HOME}/custom/.auto-completions:${HOME}/dev";
 
 export LANG=en_US.UTF-8
 
@@ -90,6 +101,7 @@ export LANG=en_US.UTF-8
 alias be='bundle exec';
 #alias grep='grep -C 5 --colour always -E -H -i'
 alias devenvset="cd ${HOME}/devenvset";
+alias nb=nanobox;
 alias rake='bundle exec rake';
 alias resource="source ${HOME}/.zshrc";
 alias spec='bundle exec rspec';
@@ -183,9 +195,6 @@ set -o vi;  			# Use vi mode in the shell
 autoload edit-command-line; zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 bindkey '^r' history-incremental-search-backward;
-source "${HOME}/.asdf/asdf.sh";
-source "${HOME}/.asdf/completions/asdf.bash";
-source "${HOME}/custom/scripts/main_pane_height.sh";
 
 function disallow()
 {
@@ -195,8 +204,3 @@ function disallow()
 }
 
 disallow du dspace
-
-export GITHUB_CLIENT_ID=605f6a951c5007a1c3c9;
-export GITHUB_CLIENT_SECRET=e0e29ab763881130796c58100731b9ee13409294;
-export ONCOURSE_SECRET=+LrwmzuNfh5iLkL/qQ7Z6k+ptAJoFcVXKO7Tfh7ic180TuoR0p31L3I3dELCMH74;
-export HAL_SLACK_TOKEN=xoxb-203737943971-RlPgm4N9e3LUzjyZn0t3cRu8;
