@@ -16,7 +16,7 @@ cp "dotfiles/.tmux.conf" "${HOME}";
 cp "dotfiles/.vimrc" "${HOME}";
 #cp "${HOME}/.ssh/authorized_keys" "${HOME}"
 
-#apk add sudo build-base zsh libevent-dev-2.1.8-r2 curl tmux python cmake
+#apk add sudo build-base zsh curl tmux ncurses
 
 git clone "https://github.com/VundleVim/Vundle.vim.git" "${HOME}/.vim/bundle/Vundle.vim"
 su - "${USERNAME}" -c vim +PluginInstall +qall
