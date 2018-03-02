@@ -29,7 +29,7 @@ export DISABLE_AUTO_TITLE=true;
 ZSH_THEME="agnoster";
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="false"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
@@ -45,7 +45,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git tmux)
+plugins=(git tmux mix docker)
 
 # Plugin Configuration
 export TERM="screen-256color";
@@ -54,7 +54,7 @@ ZSH_TMUX_AUTOQUIT=false;
 
 # User configuration
 
-export PATH="/opt/X11/bin:/usr/local/heroku/bin:/usr/local/bin:/usr/local/sbin:${PATH}";
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin";
 
 # This is a base file, intended to work in any environment. If there are changes
 # that should be made for a give environment, they belong in a local zshrc.
@@ -68,7 +68,9 @@ source $ZSH/oh-my-zsh.sh;
 
 PATH="$HOME/custom/scripts:${HOME}/custom/git-custom:${HOME}/custom/.auto-completions:${PATH}"
 export DEVPATH="${HOME}/custom/scripts:${HOME}/custom/git-custom:${HOME}/custom/.auto-completions:${HOME}/dev";
-#export fpath=("${HOME}/custom/.auto-completions" $fpath)
+export fpath=("${HOME}/custom/.auto-completions" $fpath)
+
+export GOPATH="${HOME}/go";
 
 export LANG=en_US.UTF-8
 
@@ -84,10 +86,17 @@ export LANG=en_US.UTF-8
 
 # aliases
 
+alias be='bundle exec';
+alias bi='bundle install';
+alias convox='time convox';
+alias dc='docker-compose';
+alias jet='time jet';
 alias resource="source ${HOME}/.zshrc";
+alias spec='bundle exec rspec';
 alias tmuxrc="$EDITOR ${HOME}/.tmux.conf";
 alias vimrc="$EDITOR ${HOME}/.vimrc";
 alias x='exit';
+alias xclip='xclip -selection clipboard';
 alias zshrc="$EDITOR ${HOME}/.zshrc";
 
 case $OSTYPE in
@@ -112,7 +121,7 @@ function copyDotFile()
 {
   DOT_FILE=$1;
 
-  cp "${HOME}/${DOT_FILE}" "${DEVENVSET_DIR}/files/default/";
+  cp "${HOME}/${DOT_FILE}" "${DEVENVSET_DIR}/dotfiles";
 }
 
 function pushDevenvset()
@@ -169,10 +178,13 @@ function init-session()
 
 set -o vi;  			# Use vi mode in the shell
 
-# Base16 Shell
-#BASE16_SHELL="$HOME/.config/base16-shell/";
-#[ -n "$PS1"  ] && [ -s $BASE16_SHELL/profile_helper.sh  ] && eval "$($BASE16_SHELL/profile_helper.sh)";
-#[[ -s $BASE16_SHELL  ]] && source $BASE16_SHELL;
-#base16_chalk;
-
 bindkey '^r' history-incremental-search-backward;
+source "$HOME/.asdf/asdf.sh";
+source "$HOME/.asdf/completions/asdf.bash";
+
+autoload -U edit-command-line;
+zle -N edit-command-line;
+bindkey -M vicmd v edit-command-line;
+
+GPG_TTY=$(tty);
+export GPG_TTY;
