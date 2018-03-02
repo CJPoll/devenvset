@@ -6,13 +6,12 @@ filetype off                  " required
 set rtp+=~/custom/vim
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'gmarik/vundle'
+Plugin 'VundleVim/Vundle.Vim'
 
 " Vundle Packages {{{
 Plugin 'bling/vim-airline'                 " Lightweight Powerline
 Plugin 'christoomey/vim-tmux-navigator'    " TMUX integration
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'euclio/vim-markdown-composer'
 Plugin 'jiangmiao/auto-pairs'              " Auto-pairs parens & others
 "Plugin 'majutsushi/tagbar'                 " View ctags info in pane
 Plugin 'mileszs/ack.vim'                   " Ack integration
@@ -21,6 +20,7 @@ Plugin 'vim-syntastic/syntastic'              " Syntax checker
 Plugin 'sjl/gundo.vim'                     " Lets you view your undo tree
 Plugin 'tmhedberg/matchit'                 " % also matches (X/HT)ML
 Plugin 'tpope/vim-fugitive'                " Git integration
+Plugin 'tpope/vim-git'                                " Git commit syntax stuff
 Plugin 'tpope/vim-surround'                " Auto-surround text (quotes, html, etc.)
 Plugin 'vim-scripts/zoomwintab.vim'        " Zooms a tab into a specific pane
 
@@ -49,11 +49,6 @@ set omnifunc=syntaxcomplete#Complete
 
 " }}}
 
-" Powerline Setup {{{
-" python from powerline.vim import setup as powerline_setup
-" python powerline_setup()
-" python del powerline_setup
-
 " Always show statusline
 set laststatus=2
 
@@ -62,11 +57,7 @@ set t_Co=256"
 " }}}
 
 " Global variables {{{
-let g:airline_powerline_fonts = 1
-let g:erlangFoldSplitFunction=1
-let g:ycm_semantic_triggers = {
-     \ 'elm' : ['.'],
-     \}
+let g:airline_powerline_fonts=1
 
 " Syntastic Settings
 let g:syntastic_always_populate_loc_list = 1
@@ -81,9 +72,13 @@ set laststatus=2   				          " Always show the statusline
 set encoding=utf-8 				          " Necessary to show Unicode glyphs
 set t_Co=256 					              " Explicitly tell Vim that the terminal supports 256 colors
 
-"set background=dark 			          " Sets the background color (dark|light)
-set backspace=indent,eol,start		  " Backspace works correctly
-set cursorline					            " Highlights the current line
+set wildignore+=*/tmp/*,*.so,*swp,*.swo,*.zip,*.beam,*/deps/*,*/_build/*,*/node_modules/*,**/elm-stuff/*
+
+colorscheme elflord
+
+"set background=dark                 " Sets the background color (dark|light)
+set backspace=indent,eol,start      " Backspace works correctly
+set cursorline                      " Highlights the current line
 set exrc
 set fileformat=unix				          " Sets the file format
 set foldenable					            " Enables code folding
@@ -101,12 +96,13 @@ set path=$PWD/**                    " Sets the path for easier navigation
 set regexpengine=1
 set ruler						                " Show which column the cursor is on
 set scrolloff=8				              " Start scrolling when cursor is x lines from edge
-set shell=/bin/zsh		              " What shell to start on :shell command
-"set shellcmdflag=-l	              " Load .bash_profile when running shell commands
-" (Allows aliases), but vim tends to drop to the back
+set shell=/usr/bin/zsh		              " What shell to start on :shell command
 set showcmd						              " Shows info about the current command at the bottom
 set smartcase					              " Only search with case if capitals are used
+set tabpagemax=30
 set tw=80 						              " Text Width = 80 characters
+set undofile
+set undodir=/Users/cjpoll/.vimundo/
 set wildmenu					              " Autocomplete done right
 set wildmode=full			              " Autocomplete done right
 syntax on						                " Syntax highlighting
@@ -275,28 +271,28 @@ augroup javascript
 augroup END
 
 augroup gitcommit
-  autocmd!
-  autocmd! FileType gitcommit set textwidth=72  " Git commits should be 72 lines
+	autocmd!
+	autocmd! FileType gitcommit set textwidth=72  " Git commits should be 72 lines
 augroup END
 " }}}
-
+set exrc
 set secure
 
 let g:tagbar_type_elixir = {
-    \ 'ctagstype' : 'elixir',
-    \ 'kinds' : [
-        \ 'f:functions',
-        \ 'functions:functions',
-        \ 'c:callbacks',
-        \ 'd:delegates',
-        \ 'e:exceptions',
-        \ 'i:implementations',
-        \ 'a:macros',
-        \ 'o:operators',
-        \ 'm:modules',
-        \ 'p:protocols',
-        \ 'r:records'
-        \ ]
-      \ }
+			\ 'ctagstype' : 'elixir',
+			\ 'kinds' : [
+			\ 'f:functions',
+			\ 'functions:functions',
+			\ 'c:callbacks',
+			\ 'd:delegates',
+			\ 'e:exceptions',
+			\ 'i:implementations',
+			\ 'a:macros',
+			\ 'o:operators',
+			\ 'm:modules',
+			\ 'p:protocols',
+			\ 'r:records'
+			\ ]
+			\ }
 
 call SourceIfExists("$HOME/.vimrc.local")

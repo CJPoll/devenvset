@@ -29,7 +29,7 @@ export DISABLE_AUTO_TITLE=true;
 ZSH_THEME="agnoster";
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="false"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
@@ -45,7 +45,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git tmux mix docker)
+plugins=(git tmux docker)
 
 # Plugin Configuration
 export TERM="screen-256color";
@@ -70,8 +70,6 @@ PATH="$HOME/custom/scripts:${HOME}/custom/git-custom:${HOME}/custom/.auto-comple
 export DEVPATH="${HOME}/custom/scripts:${HOME}/custom/git-custom:${HOME}/custom/.auto-completions:${HOME}/dev";
 export fpath=("${HOME}/custom/.auto-completions" $fpath)
 
-export GOPATH="${HOME}/go";
-
 export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
@@ -86,13 +84,8 @@ export LANG=en_US.UTF-8
 
 # aliases
 
-alias be='bundle exec';
-alias bi='bundle install';
-alias convox='time convox';
 alias dc='docker-compose';
-alias jet='time jet';
 alias resource="source ${HOME}/.zshrc";
-alias spec='bundle exec rspec';
 alias tmuxrc="$EDITOR ${HOME}/.tmux.conf";
 alias vimrc="$EDITOR ${HOME}/.vimrc";
 alias x='exit';
@@ -179,8 +172,6 @@ function init-session()
 set -o vi;  			# Use vi mode in the shell
 
 bindkey '^r' history-incremental-search-backward;
-source "$HOME/.asdf/asdf.sh";
-source "$HOME/.asdf/completions/asdf.bash";
 
 autoload -U edit-command-line;
 zle -N edit-command-line;
