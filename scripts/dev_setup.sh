@@ -14,6 +14,7 @@ HOME="/home/${USERNAME}"
 cp "dotfiles/.zshrc" "${HOME}";
 cp "dotfiles/.tmux.conf" "${HOME}";
 cp "dotfiles/.vimrc" "${HOME}";
+cp "dotfiles/.gitignore" "${HOME}";
 #cp "${HOME}/.ssh/authorized_keys" "${HOME}"
 
 #apk add sudo build-base zsh curl tmux ncurses
@@ -24,6 +25,10 @@ su - "${USERNAME}" -c vim +PluginInstall +qall
 git clone git@github.com:robbyrussell/oh-my-zsh "${HOME}/.oh-my-zsh"
 git clone git@github.com:tmux-plugins/tpm "${HOME}/.tmux/plugins/tpm"
 git clone git@github.com:cjpoll/custom "${HOME}/custom"
+
+git config --global user.email "cjpoll@gmail.com"
+git config --global user.username "Cody J. Poll"
+git config --global core.excludesfile "${HOME}/.gitignore"
 
 chown -R "${USERNAME}" "${HOME}/.oh-my-zsh"
 chown -R "${USERNAME}" "${HOME}/.tmux/plugins/tpm"

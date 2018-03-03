@@ -107,6 +107,7 @@ function updatedots()
     copyDotFile ".bashrc" 	&& \
     copyDotFile ".zshrc" 	&& \
     copyDotFile ".psqlrc" 	&& \
+    copyDotFile ".gitignore" 	&& \
     pushDevenvset;
 }
 
