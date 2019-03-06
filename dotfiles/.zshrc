@@ -29,7 +29,7 @@ export DISABLE_AUTO_TITLE=true;
 ZSH_THEME="agnoster";
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+# ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
@@ -56,6 +56,9 @@ ZSH_TMUX_AUTOQUIT=false;
 
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin";
 
+autoload -U compinit
+compinit
+
 # This is a base file, intended to work in any environment. If there are changes
 # that should be made for a give environment, they belong in a local zshrc.
 LOCAL_RC="${HOME}/.zshrc.local"
@@ -66,8 +69,8 @@ fi
 
 source $ZSH/oh-my-zsh.sh;
 
-PATH="$HOME/custom/scripts:${HOME}/custom/git-custom:${HOME}/custom/.auto-completions:${PATH}"
-export DEVPATH="${HOME}/custom/scripts:${HOME}/custom/git-custom:${HOME}/custom/.auto-completions:${HOME}/dev";
+PATH="$HOME/custom/scripts:${HOME}/custom/git-custom:${PATH}"
+export DEVPATH="${HOME}/custom/scripts:${HOME}/custom/git-custom:${HOME}/custom/.auto-completions:${HOME}/dev:${HOME}/dev/go/src";
 export fpath=("${HOME}/custom/.auto-completions" $fpath)
 
 export LANG=en_US.UTF-8
@@ -85,6 +88,7 @@ export LANG=en_US.UTF-8
 # aliases
 
 alias dc='docker-compose';
+alias kc='kubectl'
 alias resource="source ${HOME}/.zshrc";
 alias tmuxrc="$EDITOR ${HOME}/.tmux.conf";
 alias vimrc="$EDITOR ${HOME}/.vimrc";
@@ -177,6 +181,8 @@ bindkey '^r' history-incremental-search-backward;
 autoload -U edit-command-line;
 zle -N edit-command-line;
 bindkey -M vicmd v edit-command-line;
+
+main_pane_height.sh;
 
 GPG_TTY=$(tty);
 export GPG_TTY;

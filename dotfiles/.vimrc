@@ -9,20 +9,25 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.Vim'
 
 " Vundle Packages {{{
+Plugin 'MarcWeber/vim-addon-mw-utils'      " Dependency for snipmate
+Plugin 'tomtom/tlib_vim'                   " Dependency for snipmate
+
 Plugin 'bling/vim-airline'                 " Lightweight Powerline
 Plugin 'christoomey/vim-tmux-navigator'    " TMUX integration
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'garbas/vim-snipmate'
 Plugin 'jiangmiao/auto-pairs'              " Auto-pairs parens & others
-"Plugin 'majutsushi/tagbar'                 " View ctags info in pane
+Plugin 'majutsushi/tagbar'                 " View ctags info in pane
 Plugin 'mileszs/ack.vim'                   " Ack integration
+Plugin 'mmorearty/elixir-ctags'
 Plugin 'scrooloose/nerdtree'               " Opens a file browser
-Plugin 'vim-syntastic/syntastic'              " Syntax checker
 Plugin 'sjl/gundo.vim'                     " Lets you view your undo tree
 Plugin 'tmhedberg/matchit'                 " % also matches (X/HT)ML
 Plugin 'tpope/vim-fugitive'                " Git integration
-Plugin 'tpope/vim-git'                                " Git commit syntax stuff
+Plugin 'tpope/vim-git'                     " Git commit syntax stuff
 Plugin 'tpope/vim-surround'                " Auto-surround text (quotes, html, etc.)
 Plugin 'vim-scripts/zoomwintab.vim'        " Zooms a tab into a specific pane
+Plugin 'vim-syntastic/syntastic'           " Syntax checker
 
 Plugin 'ctags.vim'
 
@@ -72,9 +77,10 @@ set laststatus=2   				          " Always show the statusline
 set encoding=utf-8 				          " Necessary to show Unicode glyphs
 set t_Co=256 					              " Explicitly tell Vim that the terminal supports 256 colors
 
-set wildignore+=*/tmp/*,*.so,*swp,*.swo,*.zip,*.beam,*/deps/*,*/_build/*,*/node_modules/*,**/elm-stuff/*
+set wildignore+=*/tmp/*,*.so,*swp,*.swo,*.zip,*.beam,*/deps/*,*/_build/*,*/node_modules/*,**/elm-stuff/*,**/doc/*
 
-colorscheme elflord
+colorscheme base16-bright
+let base16colorspace=256  " Access colors present in 256 colorspace"
 
 "set background=dark                 " Sets the background color (dark|light)
 set backspace=indent,eol,start      " Backspace works correctly
@@ -90,13 +96,13 @@ set incsearch					              " Search while typing
 set list
 set listchars=tab:❘-,trail:·
 set nobackup					              " Don't make backup files
-"set noswapfile				              " Don't make annoying swap files
+set noswapfile				              " Don't make annoying swap files
 set number						              " Line numbers
 set path=$PWD/**                    " Sets the path for easier navigation
 set regexpengine=1
 set ruler						                " Show which column the cursor is on
 set scrolloff=8				              " Start scrolling when cursor is x lines from edge
-set shell=/usr/bin/zsh		              " What shell to start on :shell command
+"set shell=/bin/bash		              " What shell to start on :shell command
 set showcmd						              " Shows info about the current command at the bottom
 set smartcase					              " Only search with case if capitals are used
 set tabpagemax=30
@@ -117,9 +123,9 @@ set smartindent			                " Smart auto-indenting
 set autoindent			                " Automatically indent new lines
 set tabstop=2			                  " How many spaces tabs are indented
 set shiftwidth=2 		                " How many spaces autoindent should indent
-set noexpandtab 			                " Turns tabs into spaces (number of spaces == tabstop)
+set expandtab 			                " Turns tabs into spaces (number of spaces == tabstop)
 
-set showbreak=↪
+"set showbreak=↪
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 " }}}
@@ -231,9 +237,6 @@ nnoremap <leader>U vU
 " Lowercase Letter
 nnoremap <leader>u vu
 
-" Insert Erlang module name
-nnoremap <leader>$ i<Right><C-R>=expand("%:t:r")<CR><ESC>
-
 " Swap windows
 nnoremap <leader><leader>s <C-w>r
 " }}}
@@ -256,11 +259,6 @@ augroup ruby
 	autocmd! FileType ruby set tabstop=2
 	autocmd! FileType ruby set shiftwidth=2
 	autocmd! FileType ruby set expandtab
-augroup END
-
-augroup jsx
-	autocmd!
-	autocmd FileType jsx setf javascript
 augroup END
 
 au BufNewFile,BufRead *.es6 setlocal ft=javascript
@@ -291,8 +289,9 @@ let g:tagbar_type_elixir = {
 			\ 'o:operators',
 			\ 'm:modules',
 			\ 'p:protocols',
-			\ 'r:records'
+			\ 'r:records',
+			\ 't:tests'
 			\ ]
-			\ }
+		\ }
 
 call SourceIfExists("$HOME/.vimrc.local")
