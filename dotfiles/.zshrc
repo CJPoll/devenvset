@@ -45,7 +45,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git tmux docker)
+plugins=(git tmux docker mix kubectl asdf)
 
 # Plugin Configuration
 export TERM="screen-256color";
@@ -88,8 +88,10 @@ export LANG=en_US.UTF-8
 # aliases
 
 alias dc='docker-compose';
-alias kc='kubectl'
+alias kc='kubectl';
+alias m='make'
 alias resource="source ${HOME}/.zshrc";
+alias ta='tmux attach:';
 alias tmuxrc="$EDITOR ${HOME}/.tmux.conf";
 alias vimrc="$EDITOR ${HOME}/.vimrc";
 alias x='exit';

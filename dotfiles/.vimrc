@@ -27,7 +27,7 @@ Plugin 'tpope/vim-fugitive'                " Git integration
 Plugin 'tpope/vim-git'                     " Git commit syntax stuff
 Plugin 'tpope/vim-surround'                " Auto-surround text (quotes, html, etc.)
 Plugin 'vim-scripts/zoomwintab.vim'        " Zooms a tab into a specific pane
-Plugin 'vim-syntastic/syntastic'           " Syntax checker
+""Plugin 'vim-syntastic/syntastic'           " Syntax checker
 
 Plugin 'ctags.vim'
 
@@ -77,9 +77,10 @@ set laststatus=2   				          " Always show the statusline
 set encoding=utf-8 				          " Necessary to show Unicode glyphs
 set t_Co=256 					              " Explicitly tell Vim that the terminal supports 256 colors
 
-set wildignore+=*/tmp/*,*.so,*swp,*.swo,*.zip,*.beam,*/deps/*,*/_build/*,*/node_modules/*,**/elm-stuff/*,**/doc/*
+set wildignore+=*/tmp/*,*.so,*swp,*.swo,*.zip,*.beam,*/deps/*,*/_build/*,*/node_modules/*,**/elm-stuff/*,**/doc/*,*.class,**/project/*,**/target/*
 
-colorscheme base16-bright
+colorscheme base16-tomorrow
+
 let base16colorspace=256  " Access colors present in 256 colorspace"
 
 "set background=dark                 " Sets the background color (dark|light)
@@ -93,8 +94,8 @@ set foldlevel=1
 set hlsearch					              " Highlight search results
 set ignorecase				              " Ignore case when searching
 set incsearch					              " Search while typing
-set list
-set listchars=tab:❘-,trail:·
+"set list
+"set listchars=tab:❘-,trail:·
 set nobackup					              " Don't make backup files
 set noswapfile				              " Don't make annoying swap files
 set number						              " Line numbers
@@ -139,6 +140,9 @@ let localleader="\\"
 
 " Pinky saver
 nnoremap ; :
+
+" Toggle paste mode
+nnoremap <leader>p :set paste!<CR>
 
 " Git Mappings {{{
 " Extra whitespace is intentional
