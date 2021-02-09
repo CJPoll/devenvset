@@ -9,13 +9,9 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.Vim'
 
 " Vundle Packages {{{
-Plugin 'MarcWeber/vim-addon-mw-utils'      " Dependency for snipmate
-Plugin 'tomtom/tlib_vim'                   " Dependency for snipmate
-
 Plugin 'bling/vim-airline'                 " Lightweight Powerline
 Plugin 'christoomey/vim-tmux-navigator'    " TMUX integration
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'garbas/vim-snipmate'
 Plugin 'jiangmiao/auto-pairs'              " Auto-pairs parens & others
 Plugin 'majutsushi/tagbar'                 " View ctags info in pane
 Plugin 'mileszs/ack.vim'                   " Ack integration
@@ -27,7 +23,6 @@ Plugin 'tpope/vim-fugitive'                " Git integration
 Plugin 'tpope/vim-git'                     " Git commit syntax stuff
 Plugin 'tpope/vim-surround'                " Auto-surround text (quotes, html, etc.)
 Plugin 'vim-scripts/zoomwintab.vim'        " Zooms a tab into a specific pane
-""Plugin 'vim-syntastic/syntastic'           " Syntax checker
 
 Plugin 'ctags.vim'
 
@@ -64,12 +59,8 @@ set t_Co=256"
 " Global variables {{{
 let g:airline_powerline_fonts=1
 
-" Syntastic Settings
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_enable_signs = 1
+let g:gundo_prefer_python3 = 1
+
 " }}}
 
 "Personal settings {{{
@@ -79,7 +70,7 @@ set t_Co=256 					              " Explicitly tell Vim that the terminal supports
 
 set wildignore+=*/tmp/*,*.so,*swp,*.swo,*.zip,*.beam,*/deps/*,*/_build/*,*/node_modules/*,**/elm-stuff/*,**/doc/*,*.class,**/project/*,**/target/*
 
-colorscheme base16-tomorrow
+colorscheme base16-bright
 
 let base16colorspace=256  " Access colors present in 256 colorspace"
 
@@ -144,14 +135,6 @@ nnoremap ; :
 " Toggle paste mode
 nnoremap <leader>p :set paste!<CR>
 
-" Git Mappings {{{
-" Extra whitespace is intentional
-nnoremap <leader>ga :Git add 
-nnoremap <leader>gs :Git status<CR>
-nnoremap <leader>gc :Git commit -v<CR>
-nnoremap <leader>gca :Git commit -v --amend<CR>
-nnoremap <leader>gp :Git push<CR>
-" }}}
 
 " Easy alignment
 nnoremap <leader>i gg=G
@@ -192,9 +175,6 @@ nnoremap <leader>q :q!<CR>
 " Easy quit all
 nnoremap <leader><leader>q :qa!<CR>
 
-" Easy shell command
-nnoremap <leader>l :shell<CR>
-
 " Easy window split (horizontal)
 nnoremap <leader>hs :split<CR>
 
@@ -220,6 +200,7 @@ if has('nvim')
 	nmap <BS> <C-W>h
 	tnoremap <Esc> <C-\><C-n>
 endif
+
 " Easy move to the window to the left
 nnoremap <C-h> <C-w>h
 
@@ -227,7 +208,7 @@ nnoremap <C-h> <C-w>h
 nnoremap <leader>n :TagbarToggle<CR>
 
 " Jump to tagbar
-nnoremap <leader><leader>n <C-w>2l
+nnoremap <leader><leader>n <C-w>5l
 
 " GundoToggle
 nnoremap <leader>G :GundoToggle<CR>
@@ -254,22 +235,6 @@ augroup END
 augroup reload_vimrc
 	autocmd!
 	autocmd BufWritePost $MYVIMRC source $MYVIMRC
-augroup END
-
-augroup ruby
-	autocmd!
-	autocmd! FileType ruby set smartindent
-	autocmd! FileType ruby set autoindent
-	autocmd! FileType ruby set tabstop=2
-	autocmd! FileType ruby set shiftwidth=2
-	autocmd! FileType ruby set expandtab
-augroup END
-
-au BufNewFile,BufRead *.es6 setlocal ft=javascript
-
-augroup javascript
-	autocmd!
-	autocmd FileType javascript call JavaScriptFold()
 augroup END
 
 augroup gitcommit
