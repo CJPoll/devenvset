@@ -123,42 +123,6 @@ case $OSTYPE in
   *) alias ll='ls -ahlvF --color --group-directories-first';;
 esac
 
-DEVENVSET_DIR="${DEV_DIR}/devenvset";
-
-function updatedots()
-{
-  copyDotFile ".tmux.conf" 	&& \
-    copyDotFile ".vimrc" 	&& \
-    copyDotFile ".bashrc" 	&& \
-    copyDotFile ".zshrc" 	&& \
-    copyDotFile ".psqlrc" 	&& \
-    copyDotFile ".gitignore" 	&& \
-    pushDevenvset;
-}
-
-function copyDotFile()
-{
-  DOT_FILE=$1;
-
-  cp "${HOME}/${DOT_FILE}" "${DEVENVSET_DIR}/dotfiles";
-}
-
-function pushDevenvset()
-{
-  pushd .;
-  cd ${DEVENVSET_DIR};
-
-  git add .;
-  git commit -v;
-  git push origin master;
-  popd;
-}
-
-function untrackedFiles()
-{
-  git ls-files --others --exclude-standard;
-}
-
 function script()
 {
   SCRIPT_NAME=$1;
