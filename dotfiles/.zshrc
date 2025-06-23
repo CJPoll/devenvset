@@ -45,7 +45,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git tmux docker mix kubectl asdf)
+plugins=(git tmux docker mix ssh-agent)
 
 # Plugin Configuration
 export TERM="screen-256color";
@@ -54,7 +54,9 @@ ZSH_TMUX_AUTOQUIT=false;
 
 # User configuration
 
-export PATH="/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin";
+# NVIM is installed by going to the github releases page, download it, extract
+# the tarball, and put the extracted directory at "${HOME}/.local/nvim"
+export PATH="${HOME}/.local/nvim/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin";
 
 autoload -U compinit
 compinit
@@ -69,9 +71,11 @@ fi
 
 source $ZSH/oh-my-zsh.sh;
 
-PATH="$HOME/custom/scripts:${HOME}/custom/git-custom:${PATH}"
-export DEVPATH="${HOME}/custom/scripts:${HOME}/custom/git-custom:${HOME}/custom/.auto-completions:${HOME}/dev:${HOME}/dev/go/src";
-export fpath=("${HOME}/custom/.auto-completions" $fpath)
+CUSTOM_DIR="${HOME}/custom"
+DEV_DIR="${HOME}/dev"
+PATH="${CUSTOM_DIR}/scripts:$CUSTOM_DIR/git-custom:${PATH}"
+export DEVPATH="${CUSTOM_DIR}/scripts:${CUSTOM_DIR}/git-custom:${CUSTOM_DIR}/.auto-completions:${DEV_DIR}";
+export fpath=("${CUSTOM_DIR}/.auto-completions" $fpath)
 
 export LANG=en_US.UTF-8
 
@@ -87,13 +91,13 @@ export LANG=en_US.UTF-8
 
 # aliases
 
-alias dc='docker-compose';
+alias dc='docker compose';
 alias kc='kubectl';
 alias m='make'
 alias resource="source ${HOME}/.zshrc";
-alias ta='tmux attach:';
+alias ta='tmux attach';
 alias tmuxrc="$EDITOR ${HOME}/.tmux.conf";
-alias vimrc="$EDITOR ${HOME}/.vimrc";
+alias vimrc="$EDITOR ${HOME}/.config/nvim/init.vim";
 alias x='exit';
 alias xclip='xclip -selection clipboard';
 alias zshrc="$EDITOR ${HOME}/.zshrc";
@@ -104,7 +108,7 @@ case $OSTYPE in
   *) alias ls='ls -ahlvF --color --group-directories-first';;
 esac
 
-DEVENVSET_DIR="${HOME}/dev/devenvset";
+DEVENVSET_DIR="${DEV_DIR}/devenvset";
 
 function updatedots()
 {
@@ -143,7 +147,7 @@ function untrackedFiles()
 function script()
 {
   SCRIPT_NAME=$1;
-  SCRIPT_DIR="${HOME}/custom/scripts"
+  SCRIPT_DIR="${CUSTOM_DIR}/scripts"
   FILE_NAME="${SCRIPT_DIR}/${SCRIPT_NAME}"
 
   vim "${FILE_NAME}";
@@ -153,7 +157,7 @@ function script()
 function dev()
 {
   PROGRAM_NAME=${1};
-  cd "${HOME}/dev/${PROGRAM_NAME}";
+  cd "${DEV_DIR}/${PROGRAM_NAME}";
 }
 
 function edit()
@@ -188,3 +192,7 @@ main_pane_height.sh;
 
 GPG_TTY=$(tty);
 export GPG_TTY;
+
+unalias gc;
+
+. "$HOME/.local/bin/env"
