@@ -26,3 +26,5 @@ erl_crash.dump
 **/*.swn
 **/*.swm
 **/.tool-versions
+requirements.md
+priv/plts
