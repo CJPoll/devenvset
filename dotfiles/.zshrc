@@ -80,8 +80,8 @@ fi
 
 source $ZSH/oh-my-zsh.sh;
 
-CUSTOM_DIR="${HOME}/custom"
-DEV_DIR="${HOME}/dev"
+export CUSTOM_DIR="${HOME}/dev/custom"
+export DEV_DIR="${HOME}/dev"
 PATH="${CUSTOM_DIR}/scripts:$CUSTOM_DIR/git-custom:${PATH}"
 export DEVPATH="${CUSTOM_DIR}/scripts:${CUSTOM_DIR}/git-custom:${CUSTOM_DIR}/.auto-completions:${DEV_DIR}";
 export fpath=("${CUSTOM_DIR}/.auto-completions" $fpath)
@@ -185,11 +185,6 @@ function edit()
 	else
 		echo "${NAME} does not exist";
 	fi
-}
-
-function init-session()
-{
-	source $(which .init-session);
 }
 
 #[[ -n "${key[Up]}"  ]] && bindkey "${key[Up]}" up-line-or-beginning-search
