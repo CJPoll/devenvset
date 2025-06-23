@@ -16,8 +16,13 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=50000
+HISTFILESIZE=100000
+# Configure bash history location
+export HISTFILE="${HOME}/.history/bash/bash_history"
+
+# Configure Docker config location
+export DOCKER_CONFIG="${HOME}/.config/docker"
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -123,3 +128,5 @@ fi
 if [ -x /usr/bin/mint-fortune ]; then
      /usr/bin/mint-fortune
 fi
+
+. "$HOME/.local/bin/env"
