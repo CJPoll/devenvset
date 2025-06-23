@@ -89,11 +89,11 @@ export fpath=("${CUSTOM_DIR}/.auto-completions" $fpath)
 export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
- if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vim'
- else
-   export EDITOR='vim'
- fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='vim'
+fi
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
@@ -141,14 +141,14 @@ function dev()
 
 function edit()
 {
-	NAME="${1}";
-	FILE=$(which "${NAME}");
+  NAME="${1}";
+  FILE=$(which "${NAME}");
 
-	if [[ -a "${FILE}" ]]; then
-		${EDITOR} "${FILE}";
-	else
-		echo "${NAME} does not exist";
-	fi
+  if [[ -a "${FILE}" ]]; then
+    ${EDITOR} "${FILE}";
+  else
+    echo "${NAME} does not exist";
+  fi
 }
 
 #[[ -n "${key[Up]}"  ]] && bindkey "${key[Up]}" up-line-or-beginning-search
