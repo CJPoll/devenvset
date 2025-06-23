@@ -1,30 +1,19 @@
-" Vundle Setup {{{
-set nocompatible              " be iMproved, required
-filetype off                  " required
+"set runtimepath^=~/.vim runtimepath+=~/.vim/after
+"let &packpath=&runtimepath
+"source ~/.vimrc
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/custom/vim
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.Vim'
+lua << EOF
+-- require("claude-code").setup({
+--  window = {
+--    split_ratio = 0.3
+--  }
+-- })
+EOF
 
-" Vundle Packages {{{
-Plugin 'bling/vim-airline'                 " Lightweight Powerline
-Plugin 'christoomey/vim-tmux-navigator'    " TMUX integration
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'jiangmiao/auto-pairs'              " Auto-pairs parens & others
-Plugin 'majutsushi/tagbar'                 " View ctags info in pane
-Plugin 'mileszs/ack.vim'                   " Ack integration
-Plugin 'mmorearty/elixir-ctags'
-Plugin 'scrooloose/nerdtree'               " Opens a file browser
-Plugin 'sjl/gundo.vim'                     " Lets you view your undo tree
-Plugin 'tmhedberg/matchit'                 " % also matches (X/HT)ML
-Plugin 'tpope/vim-fugitive'                " Git integration
-Plugin 'tpope/vim-git'                     " Git commit syntax stuff
-Plugin 'tpope/vim-surround'                " Auto-surround text (quotes, html, etc.)
-Plugin 'vim-scripts/zoomwintab.vim'        " Zooms a tab into a specific pane
-
-Plugin 'ctags.vim'
+call plug#begin()
+if has('nvim')
+  set runtimepath+=~/.vim/
+endif
 
 function! SourceIfExists(file)
 	let filename = glob(a:file)
@@ -36,9 +25,38 @@ function! SourceIfExists(file)
 	endif
 endfunction
 
-call SourceIfExists("$HOME/.vimrc.local.plugins")
+" Vundle Packages {{{
+Plug 'bling/vim-airline'                 " Lightweight Powerline
+Plug 'christoomey/vim-tmux-navigator'    " TMUX integration
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'jiangmiao/auto-pairs'              " Auto-pairs parens & others
+Plug 'majutsushi/tagbar'                 " View ctags info in pane
+Plug 'mileszs/ack.vim'                   " Ack integration
+Plug 'mmorearty/elixir-ctags'
+Plug 'scrooloose/nerdtree'               " Opens a file browser
+Plug 'sjl/gundo.vim'                     " Lets you view your undo tree
+Plug 'tmhedberg/matchit'                 " % also matches (X/HT)ML
+Plug 'tpope/vim-fugitive'                " Git integration
+Plug 'tpope/vim-git'                     " Git commit syntax stuff
+Plug 'tpope/vim-surround'                " Auto-surround text (quotes, html, etc.)
+Plug 'vim-scripts/zoomwintab.vim'        " Zooms a tab into a specific pane
+Plug 'chriskempson/base16-vim'
+Plug 'elixir-editors/vim-elixir'
+Plug 'madox2/vim-ai'
 
-call vundle#end()            " required
+" Claude Code Dep (and elixir-tools)
+Plug 'nvim-lua/plenary.nvim'
+Plug 'greggh/claude-code.nvim'
+Plug 'elixir-tools/elixir-tools.nvim', { 'tag': 'stable' }
+
+call plug#end()
+
+
+lua << EOF
+require('claude-code').setup({})
+require("elixir").setup()
+EOF
+
 filetype plugin indent on    " required
 
 " }}}
@@ -53,7 +71,7 @@ set omnifunc=syntaxcomplete#Complete
 set laststatus=2
 
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
-set t_Co=256"
+"set t_Co=256
 " }}}
 
 " Global variables {{{
@@ -71,10 +89,10 @@ set t_Co=256 					              " Explicitly tell Vim that the terminal supports
 set wildignore+=*/tmp/*,*.so,*swp,*.swo,*.zip,*.beam,*/deps/*,*/_build/*,*/node_modules/*,**/elm-stuff/*,**/doc/*,*.class,**/project/*,**/target/*
 
 colorscheme base16-bright
+"set termguicolors
 
 let base16colorspace=256  " Access colors present in 256 colorspace"
-
-"set background=dark                 " Sets the background color (dark|light)
+set background=dark                 " Sets the background color (dark|light)
 set backspace=indent,eol,start      " Backspace works correctly
 set cursorline                      " Highlights the current line
 set exrc
@@ -100,7 +118,7 @@ set smartcase					              " Only search with case if capitals are used
 set tabpagemax=30
 set tw=80 						              " Text Width = 80 characters
 set undofile
-set undodir=/Users/cjpoll/.vimundo/
+set undodir=/home/cjpoll/.vimundo/
 set wildmenu					              " Autocomplete done right
 set wildmode=full			              " Autocomplete done right
 syntax on						                " Syntax highlighting
@@ -135,6 +153,8 @@ nnoremap ; :
 " Toggle paste mode
 nnoremap <leader>p :set paste!<CR>
 
+" Claude!
+nnoremap <leader>c :ClaudeCode<CR>
 
 " Easy alignment
 nnoremap <leader>i gg=G
@@ -237,6 +257,12 @@ augroup reload_vimrc
 	autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
 
+augroup css
+	autocmd!
+	autocmd! FileType css set ts=4
+	autocmd! FileType css set sw=4
+augroup END
+
 augroup gitcommit
 	autocmd!
 	autocmd! FileType gitcommit set textwidth=72  " Git commits should be 72 lines
@@ -244,23 +270,5 @@ augroup END
 " }}}
 set exrc
 set secure
-
-let g:tagbar_type_elixir = {
-			\ 'ctagstype' : 'elixir',
-			\ 'kinds' : [
-			\ 'f:functions',
-			\ 'functions:functions',
-			\ 'c:callbacks',
-			\ 'd:delegates',
-			\ 'e:exceptions',
-			\ 'i:implementations',
-			\ 'a:macros',
-			\ 'o:operators',
-			\ 'm:modules',
-			\ 'p:protocols',
-			\ 'r:records',
-			\ 't:tests'
-			\ ]
-		\ }
 
 call SourceIfExists("$HOME/.vimrc.local")
